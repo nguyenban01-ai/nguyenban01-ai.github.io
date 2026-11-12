@@ -353,7 +353,7 @@
             </div>
             <div>
               <label class="block font-semibold text-slate-700 mb-1">Tên Chi bộ ban hành:</label>
-              <input id="cfg_tenChiBo" type="text" value="Chi bộ Trường PTDTBT THCS Hưng Đạo" onchange="renderActiveDoc()"
+              <input id="cfg_tenChiBo" type="text" value="Chi bộ Trường PTDTBT THCS Tam Kim" onchange="renderActiveDoc()"
                 class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 font-bold text-red-800 focus:ring-1 focus:ring-red-600 outline-none" />
             </div>
 
@@ -437,6 +437,7 @@
               <button onclick="quickInsertBasis('Căn cứ Điều lệ Đảng Cộng sản Việt Nam;')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium">+ Điều lệ Đảng</button>
               <button onclick="quickInsertBasis('Căn cứ Quy định số 66-QĐ/TW ngày 06/02/2017 của Ban Bí thư về thể thức văn bản của Đảng;')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium">+ Quy định 66-QĐ/TW</button>
               <button onclick="quickInsertBasis('Căn cứ Hướng dẫn số 36-HD/VPTW về thể thức và kỹ thuật trình bày văn bản của Đảng;')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium">+ Hướng dẫn 36-HD/VPTW</button>
+              <button onclick="quickInsertBasis('Căn cứ Công văn số 614-CV/ĐU ngày 14/7/2026 của Ban Thường vụ Đảng ủy xã Tam Kim về chỉ đạo xây dựng các văn bản chi bộ nhiệm kỳ 2025-2030;')" class="px-2 py-1 rounded bg-red-100 hover:bg-red-200 text-red-900 text-[11px] font-bold">+ Công văn 614-CV/ĐU Đảng ủy xã Tam Kim</button>
               <button onclick="quickInsertBasis('Căn cứ Kế hoạch và sự chỉ đạo trực tiếp của Ban Thường vụ Đảng ủy xã;')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium">+ Kế hoạch Đảng ủy xã</button>
             </div>
             <textarea id="customBasisInput" rows="3" oninput="renderActiveDoc()"
@@ -444,7 +445,8 @@
               class="w-full rounded-lg border border-slate-300 p-2.5 text-xs leading-relaxed focus:ring-1 focus:ring-red-600 outline-none">Căn cứ Điều lệ Đảng Cộng sản Việt Nam;
 Căn cứ Quy định số 66-QĐ/TW của Ban Bí thư về thể thức văn bản của Đảng;
 Căn cứ Hướng dẫn số 12-HD/BTCTW của Ban Tổ chức Trung ương về nâng cao chất lượng sinh hoạt chi bộ;
-Căn cứ Nghị quyết và Chương trình công tác tháng của Đảng ủy cơ sở.</textarea>
+Căn cứ Công văn số 614-CV/ĐU ngày 14/7/2026 của Ban Thường vụ Đảng ủy xã Tam Kim về chỉ đạo xây dựng các văn bản chi bộ nhiệm kỳ 2025-2030;
+Căn cứ Kế hoạch năm học và Chương trình công tác của Chi bộ Trường PTDTBT THCS Tam Kim.</textarea>
           </div>
         </div>
 
@@ -529,7 +531,7 @@ Căn cứ Nghị quyết và Chương trình công tác tháng của Đảng ủ
             </span>
           </div>
           <p class="text-xs text-slate-500 mt-0.5">
-            Dữ liệu chuẩn theo sổ danh sách Chi bộ Trường PTDTBT THCS Hưng Đạo (Tam Kim, Nguyên Bình, Cao Bằng)
+            Dữ liệu chuẩn theo sổ danh sách Chi bộ Trường PTDTBT THCS Tam Kim (Tam Kim, Nguyên Bình, Cao Bằng)
           </p>
         </div>
 
@@ -1869,6 +1871,16 @@ Căn cứ Nghị quyết và Chương trình công tác tháng của Đảng ủ
 
     // ================= KHỞI TẠO HỆ THỐNG KHI LOAD TRANG =================
     document.addEventListener('DOMContentLoaded', () => {
+      // Đảm bảo tên Chi bộ luôn là Chi bộ Trường PTDTBT THCS Tam Kim
+      const tenChiBoInput = document.getElementById('cfg_tenChiBo');
+      if (tenChiBoInput && (!tenChiBoInput.value || tenChiBoInput.value.includes('Hưng Đạo'))) {
+        tenChiBoInput.value = 'Chi bộ Trường PTDTBT THCS Tam Kim';
+      }
+      const diaDiemInput = document.getElementById('cfg_thoiGianDiaDiem');
+      if (diaDiemInput && (!diaDiemInput.value || diaDiemInput.value.includes('Hưng Đạo'))) {
+        diaDiemInput.value = '14 giờ 00 phút, tại Văn phòng Trường PTDTBT THCS Tam Kim';
+      }
+
       loadMembersFromStorage();
       renderTemplateButtons();
       renderActiveDoc();
@@ -2153,8 +2165,8 @@ Căn cứ Nghị quyết và Chương trình công tác tháng của Đảng ủ
             <p class="doc-sub-title">(Theo Hướng dẫn số 02-HD/BTCTW của Ban Tổ chức Trung ương)</p>
 
             <p class="no-indent">Họ và tên: <b>${biThu}</b>. Ngày sinh: 22/8/1979.</p>
-            <p class="no-indent">Chức vụ Đảng: Bí thư Chi bộ. Chức vụ chính quyền/chuyên môn: Hiệu trưởng.</p>
-            <p class="no-indent">Đơn vị sinh hoạt: ${tenChiBo}.</p>
+            <p class="no-indent">Chức vụ Đảng: Bí thư Chi bộ. Chức vụ chính quyền/chuyên môn: Hiệu trưởng Trường PTDTBT THCS Tam Kim.</p>
+            <p class="no-indent">Đơn vị sinh hoạt: ${tenChiBo} (Đảng bộ xã Tam Kim).</p>
 
             <p class="doc-heading-1">I. ƯU ĐIỂM, KẾT QUẢ ĐẠT ĐƯỢC</p>
             <p class="doc-heading-2">1. Về tư tưởng chính trị, đạo đức, lối sống, ý thức tổ chức kỷ luật:</p>
