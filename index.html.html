@@ -1,0 +1,3100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hệ Thống Quản Lý & Soạn Thảo Văn Bản Công Tác Đảng Chuẩn Thể Thức</title>
+  
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Free Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --party-red: #b91c1c;
+      --party-red-dark: #7f1d1d;
+      --party-gold: #f59e0b;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* ĐỊNH DẠNG TRANG VĂN BẢN ĐẢNG A4 CHUẨN QUY ĐỊNH 66-QĐ/TW & HƯỚNG DẪN 36-HD/VPTW */
+    .party-doc-page {
+      font-family: 'Times New Roman', 'Noto Serif', Times, serif;
+      font-size: 14pt;
+      line-height: 1.42;
+      color: #000000;
+      background: #ffffff;
+      width: 100%;
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      /* Canh lề chuẩn: Trên 20-25mm, Dưới 20-25mm, Trái 30-35mm, Phải 15-20mm */
+      padding: 22mm 18mm 22mm 30mm;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      border: 1px solid #cbd5e1;
+      box-sizing: border-box;
+      outline: none;
+      position: relative;
+    }
+
+    .party-doc-page p {
+      margin-top: 0;
+      margin-bottom: 6pt;
+      text-align: justify;
+      text-indent: 1.27cm; /* Lùi đầu dòng chuẩn 1.27cm */
+    }
+    .party-doc-page p.no-indent {
+      text-indent: 0 !important;
+    }
+    .party-doc-page p.doc-main-title {
+      text-indent: 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 15pt;
+      text-transform: uppercase;
+      margin-top: 14pt;
+      margin-bottom: 4pt;
+      color: #000000;
+    }
+    .party-doc-page p.doc-sub-title {
+      text-indent: 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 13.5pt;
+      margin-top: 0;
+      margin-bottom: 10pt;
+    }
+    .party-doc-page p.doc-heading-1 {
+      text-indent: 0;
+      font-weight: 700;
+      font-size: 14pt;
+      margin-top: 12pt;
+      margin-bottom: 4pt;
+      text-align: left;
+    }
+    .party-doc-page p.doc-heading-2 {
+      text-indent: 1.27cm;
+      font-weight: 700;
+      font-size: 14pt;
+      margin-top: 8pt;
+      margin-bottom: 4pt;
+    }
+    .party-doc-page p.doc-basis-item {
+      text-indent: 1.27cm;
+      font-style: italic;
+      margin-bottom: 4pt;
+    }
+    .party-doc-page table.doc-header-table,
+    .party-doc-page table.doc-footer-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: none;
+      margin-bottom: 12pt;
+    }
+    .party-doc-page table.doc-header-table td,
+    .party-doc-page table.doc-footer-table td {
+      border: none;
+      padding: 1pt 3pt;
+      vertical-align: top;
+      font-family: 'Times New Roman', 'Noto Serif', Times, serif;
+      font-size: 13pt;
+      line-height: 1.35;
+    }
+    .party-doc-page table.doc-content-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10pt 0 12pt 0;
+      font-size: 12pt;
+    }
+    .party-doc-page table.doc-content-table th,
+    .party-doc-page table.doc-content-table td {
+      border: 1px solid #000000;
+      padding: 5pt 6pt;
+      vertical-align: middle;
+    }
+    .party-doc-page table.doc-content-table th {
+      font-weight: 700;
+      text-align: center;
+      background-color: #f1f5f9;
+    }
+
+    /* Thước in chuẩn Print */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #printableArea, #printableArea * {
+        visibility: visible !important;
+      }
+      #printableArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 20mm 15mm 20mm 25mm !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    }
+
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .tab-btn.active {
+      background-color: #b91c1c;
+      color: #ffffff;
+      border-color: #b91c1c;
+    }
+    .badge-role-chiuy {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #f87171;
+    }
+    .badge-role-thuky {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #7dd3fc;
+    }
+    .badge-role-dangvien {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- Toast Thông báo -->
+  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- HEADER CHÍNH: QUỐC KỲ & ĐẢNG KỲ TRANG TRỌNG -->
+  <header class="bg-gradient-to-r from-red-950 via-red-900 to-red-950 text-white shadow-lg border-b-4 border-amber-400 sticky top-0 z-40">
+    <div class="max-w-[1700px] mx-auto px-4 py-3 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+      
+      <!-- Biểu trưng và tiêu đề -->
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-amber-400 text-red-900 flex flex-col items-center justify-center font-black shadow-md shrink-0 border border-amber-300">
+          <i class="fa-solid fa-star text-xl leading-none"></i>
+          <span class="text-[10px] font-extrabold uppercase mt-0.5">ĐẢNG</span>
+        </div>
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-red-950 text-amber-300 border border-amber-400/40">
+              ĐẢNG BỘ CƠ SỞ • NHIỆM KỲ 2025 - 2030
+            </span>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-white/10 text-slate-200">
+              Quy định 66-QĐ/TW & Hướng dẫn 36-HD/VPTW
+            </span>
+          </div>
+          <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-white mt-0.5 flex items-center gap-2">
+            CỔNG CÔNG TÁC ĐẢNG & XỬ LÝ VĂN BẢN ĐẢNG CHUẨN THỂ THỨC
+          </h1>
+        </div>
+      </div>
+
+      <!-- Khu vực chuyển đổi vai trò (Role-based Switcher) & Tùy chọn chi bộ -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="bg-black/30 backdrop-blur-sm p-1.5 rounded-xl border border-white/15 flex items-center gap-1">
+          <span class="text-xs text-amber-200 font-semibold px-2 flex items-center gap-1">
+            <i class="fa-solid fa-user-shield"></i> Vai trò:
+          </span>
+          <button id="roleChiUyBtn" type="button" onclick="setRole('chiuy')"
+            class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 bg-amber-400 text-red-950 shadow">
+            <i class="fa-solid fa-crown text-[11px]"></i> Ban Chi ủy
+          </button>
+          <button id="roleThuKyBtn" type="button" onclick="setRole('thuky')"
+            class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 text-slate-200 hover:bg-white/15">
+            <i class="fa-solid fa-pen-fancy text-[11px]"></i> Thư ký
+          </button>
+          <button id="roleDangVienBtn" type="button" onclick="setRole('dangvien')"
+            class="px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 text-slate-200 hover:bg-white/15">
+            <i class="fa-solid fa-users text-[11px]"></i> Đảng viên
+          </button>
+        </div>
+
+        <button onclick="exportDataBackup()" type="button" title="Sao lưu dữ liệu ra file JSON"
+          class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition flex items-center gap-1.5 border border-white/20">
+          <i class="fa-solid fa-cloud-arrow-down"></i> Sao lưu
+        </button>
+        <label for="importBackupInput" title="Khôi phục dữ liệu từ JSON"
+          class="cursor-pointer px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition flex items-center gap-1.5 border border-white/20">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Nạp lại
+          <input id="importBackupInput" type="file" accept=".json" class="hidden" onchange="importDataBackup(event)">
+        </label>
+      </div>
+
+    </div>
+
+    <!-- Thanh Menu Tabs Điều Hướng Chính -->
+    <div class="bg-red-950/80 border-t border-red-800/60 px-4">
+      <div class="max-w-[1700px] mx-auto flex items-center gap-1 overflow-x-auto py-1">
+        <button onclick="switchTab('tab-editor')" id="tabBtn-editor" class="tab-btn active px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-2 transition whitespace-nowrap">
+          <i class="fa-solid fa-file-signature text-sm"></i> Soạn Thảo Văn Bản Đảng Chuẩn
+        </button>
+        <button onclick="switchTab('tab-members')" id="tabBtn-members" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold text-slate-200 hover:bg-red-800/50 flex items-center gap-2 transition whitespace-nowrap">
+          <i class="fa-solid fa-id-card text-sm"></i> Quản Lý Danh Sách Đảng Viên (<span id="memberCountBadge">0</span>)
+        </button>
+        <button onclick="switchTab('tab-stats')" id="tabBtn-stats" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold text-slate-200 hover:bg-red-800/50 flex items-center gap-2 transition whitespace-nowrap">
+          <i class="fa-solid fa-chart-pie text-sm"></i> Thống Kê Tiêu Chí & Báo Cáo Số Liệu
+        </button>
+        <button onclick="switchTab('tab-guide')" id="tabBtn-guide" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold text-slate-200 hover:bg-red-800/50 flex items-center gap-2 transition whitespace-nowrap">
+          <i class="fa-solid fa-book-bookmark text-sm"></i> Hướng Dẫn Thể Thức 36-HD & QĐ 66
+        </button>
+        <button onclick="switchTab('tab-saved')" id="tabBtn-saved" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold text-slate-200 hover:bg-red-800/50 flex items-center gap-2 transition whitespace-nowrap">
+          <i class="fa-solid fa-box-archive text-sm"></i> Kho Văn Bản Đã Lưu (<span id="savedCountTop">0</span>)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNER THÔNG TIN VAI TRÒ HIỆN TẠI -->
+  <div id="roleBanner" class="bg-gradient-to-r from-amber-50 to-red-50 border-b border-amber-200/80 px-4 py-2 text-xs text-slate-800 transition">
+    <div class="max-w-[1700px] mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span id="currentRoleBadge" class="badge-role-chiuy px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider text-[11px] flex items-center gap-1">
+          <i class="fa-solid fa-crown"></i> Ban Chi ủy
+        </span>
+        <span id="roleInstructionText" class="text-slate-700 font-medium">
+          Đặc quyền: Ban hành Báo cáo, Nghị quyết lãnh đạo, Kế hoạch kiểm tra giám sát, Ký duyệt văn bản chính thức.
+        </span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-slate-500 font-medium flex items-center gap-1">
+          <i class="fa-regular fa-clock"></i> Cập nhật: <span id="clockCurrent">...</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NỘI DUNG CHÍNH (MAIN WORKSPACE) -->
+  <main class="flex-1 max-w-[1700px] w-full mx-auto p-3 sm:p-4">
+
+    <!-- ================= TAB 1: SOẠN THẢO VĂN BẢN ĐẢNG CHUẨN THỂ THỨC ================= -->
+    <div id="tab-editor" class="tab-content grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+      
+      <!-- CỘT TRÁI (5/12): ĐIỀU KHIỂN, CHỌN LOẠI VĂN BẢN & THÔNG TIN CẤP ỦY -->
+      <div class="lg:col-span-5 flex flex-col gap-4">
+
+        <!-- KHỐI 1: CHỌN MẪU VĂN BẢN THEO VAI TRÒ -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="bg-gradient-to-r from-red-800 to-red-700 px-4 py-3 text-white flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-layer-group text-amber-300"></i>
+              <h2 class="text-xs sm:text-sm font-bold uppercase tracking-wide">
+                1. Chọn Loại Văn Bản Đảng Cần Tạo
+              </h2>
+            </div>
+            <span id="docTypeCountBadge" class="px-2 py-0.5 rounded-full bg-amber-400 text-red-950 font-extrabold text-[11px]">
+              18 mẫu chuẩn
+            </span>
+          </div>
+
+          <div class="p-3.5 space-y-3">
+            <!-- Nhóm nút lọc nhanh danh mục -->
+            <div class="flex flex-wrap gap-1 border-b border-slate-200 pb-2">
+              <button onclick="filterTemplates('all')" class="tmpl-filter-btn px-2.5 py-1 rounded text-xs font-semibold bg-red-800 text-white" data-filter="all">Tất cả</button>
+              <button onclick="filterTemplates('baocao')" class="tmpl-filter-btn px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200" data-filter="baocao">Báo cáo (BC)</button>
+              <button onclick="filterTemplates('nghiquyet')" class="tmpl-filter-btn px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200" data-filter="nghiquyet">Nghị quyết (NQ)</button>
+              <button onclick="filterTemplates('bienban')" class="tmpl-filter-btn px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200" data-filter="bienban">Biên bản (BB)</button>
+              <button onclick="filterTemplates('kehoach')" class="tmpl-filter-btn px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200" data-filter="kehoach">Kế hoạch / QĐ</button>
+              <button onclick="filterTemplates('kiemdiem')" class="tmpl-filter-btn px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200" data-filter="kiemdiem">Kiểm điểm</button>
+            </div>
+
+            <!-- Danh sách nút chọn văn bản -->
+            <div id="templateButtonsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-1">
+              <!-- Render động bằng JS theo vai trò và bộ lọc -->
+            </div>
+          </div>
+        </div>
+
+        <!-- KHỐI 2: THÔNG TIN CHI BỘ & THỂ THỨC BAN HÀNH -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="bg-slate-800 px-4 py-2.5 text-white flex items-center justify-between cursor-pointer" onclick="toggleSection('metaConfigBody')">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-amber-400"></i>
+              <h3 class="text-xs font-bold uppercase tracking-wider">2. Thông Tin Chi Bộ, Nhân Sự & Ký Duyệt</h3>
+            </div>
+            <i id="metaConfigIcon" class="fa-solid fa-chevron-up text-xs text-slate-300"></i>
+          </div>
+
+          <div id="metaConfigBody" class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Cấp ủy cấp trên trực tiếp:</label>
+              <input id="cfg_capTren" type="text" value="ĐẢNG ỦY XÃ TAM KIM" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 font-bold text-slate-900 focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Tên Chi bộ ban hành:</label>
+              <input id="cfg_tenChiBo" type="text" value="Chi bộ Trường PTDTBT THCS Hưng Đạo" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 font-bold text-red-800 focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Địa danh ban hành:</label>
+              <input id="cfg_diaDanh" type="text" value="Tam Kim" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Số văn bản:</label>
+              <div class="flex gap-1">
+                <input id="cfg_soHieu" type="text" value="01" onchange="renderActiveDoc()"
+                  class="w-20 rounded-lg border border-slate-300 px-2.5 py-1.5 text-center font-bold focus:ring-1 focus:ring-red-600 outline-none" />
+                <span id="cfg_kyHieuText" class="self-center font-bold text-slate-600 text-xs">-BC/CB</span>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2 grid grid-cols-3 gap-2">
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1">Ngày:</label>
+                <input id="cfg_ngay" type="text" value="15" onchange="renderActiveDoc()"
+                  class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 text-center focus:ring-1 focus:ring-red-600 outline-none" />
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1">Tháng:</label>
+                <input id="cfg_thang" type="text" value="10" onchange="renderActiveDoc()"
+                  class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 text-center focus:ring-1 focus:ring-red-600 outline-none" />
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1">Năm:</label>
+                <input id="cfg_nam" type="text" value="2026" onchange="renderActiveDoc()"
+                  class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 text-center focus:ring-1 focus:ring-red-600 outline-none" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Bí thư Chi bộ (Ký chính):</label>
+              <input id="cfg_biThu" type="text" value="Nông Văn Khiêm" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 font-bold focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Phó Bí thư Chi bộ:</label>
+              <input id="cfg_phoBiThu" type="text" value="Hà Quốc Toản" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Thư ký ghi biên bản:</label>
+              <input id="cfg_thuKy" type="text" value="Lương Thị Hương" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Chi ủy viên / Đảng viên:</label>
+              <input id="cfg_chiUyVien" type="text" value="Nguyễn Ngô Ban" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Thời gian & Địa điểm sinh hoạt:</label>
+              <input id="cfg_thoiGianDiaDiem" type="text" value="14 giờ 00 phút, tại Văn phòng Chi bộ" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Số lượng đảng viên tham dự:</label>
+              <input id="cfg_dangVienCoMat" type="text" value="29/29 đồng chí (chính thức: 24, dự bị: 05)" onchange="renderActiveDoc()"
+                class="w-full rounded-lg border border-slate-300 px-2.5 py-1.5 focus:ring-1 focus:ring-red-600 outline-none" />
+            </div>
+          </div>
+        </div>
+
+        <!-- KHỐI 3: DÁN CĂN CỨ CHỈ ĐẠO CẤP TRÊN & PHÂN TÍCH TỰ ĐỘNG -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+              <i class="fa-solid fa-quote-left text-red-700"></i> Căn Cứ & Văn Bản Chỉ Đạo Tham Khảo
+            </span>
+            <span class="text-[11px] text-slate-500">Tự động tích hợp vào văn bản</span>
+          </div>
+          <div class="p-3 space-y-2.5 text-xs">
+            <div class="flex flex-wrap gap-1">
+              <button onclick="quickInsertBasis('Căn cứ Điều lệ Đảng Cộng sản Việt Nam;')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium">+ Điều lệ Đảng</button>
+              <button onclick="quickInsertBasis('Căn cứ Quy định số 66-QĐ/TW ngày 06/02/2017 của Ban Bí thư về thể thức văn bản của Đảng;')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium">+ Quy định 66-QĐ/TW</button>
+              <button onclick="quickInsertBasis('Căn cứ Hướng dẫn số 36-HD/VPTW về thể thức và kỹ thuật trình bày văn bản của Đảng;')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium">+ Hướng dẫn 36-HD/VPTW</button>
+              <button onclick="quickInsertBasis('Căn cứ Kế hoạch và sự chỉ đạo trực tiếp của Ban Thường vụ Đảng ủy xã;')" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] font-medium">+ Kế hoạch Đảng ủy xã</button>
+            </div>
+            <textarea id="customBasisInput" rows="3" oninput="renderActiveDoc()"
+              placeholder="Nhập hoặc dán các căn cứ pháp lý, công văn chỉ đạo cấp trên (mỗi dòng một căn cứ)..."
+              class="w-full rounded-lg border border-slate-300 p-2.5 text-xs leading-relaxed focus:ring-1 focus:ring-red-600 outline-none">Căn cứ Điều lệ Đảng Cộng sản Việt Nam;
+Căn cứ Quy định số 66-QĐ/TW của Ban Bí thư về thể thức văn bản của Đảng;
+Căn cứ Hướng dẫn số 12-HD/BTCTW của Ban Tổ chức Trung ương về nâng cao chất lượng sinh hoạt chi bộ;
+Căn cứ Nghị quyết và Chương trình công tác tháng của Đảng ủy cơ sở.</textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CỘT PHẢI (7/12): XEM TRƯỚC VĂN BẢN TRANG A4 & THANH CÔNG CỤ XUẤT BẢN -->
+      <div class="lg:col-span-7 flex flex-col gap-3">
+
+        <!-- THANH CÔNG CỤ TÁC VỤ VĂN BẢN (TOOLBAR) -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-3 flex flex-wrap items-center justify-between gap-2 sticky top-[105px] z-30">
+          
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-xs font-bold text-red-900 bg-red-50 border border-red-200 px-2.5 py-1 rounded-md flex items-center gap-1">
+              <i class="fa-solid fa-file-lines"></i> <span id="currentDocTitleBadge">Báo cáo công tác Đảng tháng</span>
+            </span>
+            <span class="text-xs text-slate-400">|</span>
+            <!-- Định dạng nhanh trong A4 -->
+            <button onclick="execFormat('bold')" title="In đậm (Ctrl+B)" class="w-8 h-8 rounded hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-700">
+              <i class="fa-solid fa-bold"></i>
+            </button>
+            <button onclick="execFormat('italic')" title="In nghiêng (Ctrl+I)" class="w-8 h-8 rounded hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-xs italic text-slate-700">
+              <i class="fa-solid fa-italic"></i>
+            </button>
+            <button onclick="execFormat('underline')" title="Gạch chân (Ctrl+U)" class="w-8 h-8 rounded hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-xs underline text-slate-700">
+              <i class="fa-solid fa-underline"></i>
+            </button>
+            <button onclick="execFormat('justifyLeft')" title="Căn trái" class="w-8 h-8 rounded hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-xs text-slate-700">
+              <i class="fa-solid fa-align-left"></i>
+            </button>
+            <button onclick="execFormat('justifyCenter')" title="Căn giữa" class="w-8 h-8 rounded hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-xs text-slate-700">
+              <i class="fa-solid fa-align-center"></i>
+            </button>
+            <button onclick="execFormat('justifyFull')" title="Căn đều 2 lề (chuẩn Đảng)" class="w-8 h-8 rounded hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-xs text-slate-700">
+              <i class="fa-solid fa-align-justify"></i>
+            </button>
+          </div>
+
+          <!-- Nút hành động chính: Xuất Word, In PDF, Lưu trữ -->
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <button onclick="saveCurrentDocToStorage()" type="button"
+              class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-floppy-disk text-amber-300"></i> Lưu Bản Thảo
+            </button>
+            <button onclick="copyDocumentText()" type="button"
+              class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition flex items-center gap-1.5 border border-slate-300">
+              <i class="fa-regular fa-copy"></i> Sao chép
+            </button>
+            <button onclick="exportToWordDoc()" type="button"
+              class="px-3 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-file-word"></i> Xuất Word (.doc)
+            </button>
+            <button onclick="window.print()" type="button"
+              class="px-3 py-1.5 rounded-lg bg-red-700 hover:bg-red-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-print"></i> In / PDF A4
+            </button>
+          </div>
+        </div>
+
+        <!-- KHUNG TRÌNH BÀY TRANG A4 VĂN BẢN ĐẢNG CHUẨN THỂ THỨC (CONTENTEDITABLE) -->
+        <div class="w-full flex justify-center py-2 bg-slate-200/70 rounded-xl p-2 sm:p-4 overflow-x-auto">
+          <div id="printableArea" class="party-doc-page" contenteditable="true" spellcheck="false">
+            <!-- Nội dung văn bản Đảng A4 chuẩn sẽ được render vào đây -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= TAB 2: QUẢN LÝ DANH SÁCH ĐẢNG VIÊN ================= -->
+    <div id="tab-members" class="tab-content hidden flex flex-col gap-4">
+      
+      <!-- Thanh công cụ danh sách đảng viên -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+              <i class="fa-solid fa-users-viewfinder text-red-700"></i> DANH SÁCH ĐẢNG VIÊN CHI BỘ
+            </h2>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+              <i class="fa-solid fa-file-excel mr-1"></i>Đồng bộ từ Excel gốc: 29 Đảng viên
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Dữ liệu chuẩn theo sổ danh sách Chi bộ Trường PTDTBT THCS Hưng Đạo (Tam Kim, Nguyên Bình, Cao Bằng)
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Ô tìm kiếm -->
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            <input id="searchMemberInput" type="text" placeholder="Tìm theo tên, số thẻ, chức vụ..." oninput="filterMembersList()"
+              class="pl-8 pr-3 py-1.5 rounded-lg border border-slate-300 text-xs w-48 sm:w-64 focus:ring-1 focus:ring-red-600 outline-none" />
+          </div>
+
+          <button onclick="openMemberModal()" type="button"
+            class="px-3.5 py-1.5 rounded-lg bg-red-700 hover:bg-red-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-user-plus"></i> + Thêm Đảng Viên Mới
+          </button>
+          <button onclick="exportMembersToCSV()" type="button"
+            class="px-3.5 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-file-excel"></i> Xuất Excel (CSV)
+          </button>
+          <button onclick="resetDefaultMembers()" type="button" title="Khôi phục danh sách mẫu tiêu chuẩn"
+            class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition border border-slate-300">
+            <i class="fa-solid fa-rotate-left"></i> Dữ liệu mẫu
+          </button>
+        </div>
+      </div>
+
+      <!-- Bảng lọc theo tiêu chí nhanh -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-3 flex flex-wrap items-center gap-2 text-xs">
+        <span class="font-bold text-slate-700 flex items-center gap-1">
+          <i class="fa-solid fa-filter text-amber-500"></i> Lọc nhanh:
+        </span>
+        <select id="filterStatus" onchange="filterMembersList()" class="rounded-md border border-slate-300 px-2 py-1 text-xs outline-none">
+          <option value="all">-- Tình trạng sinh hoạt --</option>
+          <option value="Chính thức">Đảng viên chính thức</option>
+          <option value="Dự bị">Đảng viên dự bị</option>
+          <option value="Miễn SH">Miễn sinh hoạt Đảng</option>
+        </select>
+        <select id="filterGender" onchange="filterMembersList()" class="rounded-md border border-slate-300 px-2 py-1 text-xs outline-none">
+          <option value="all">-- Giới tính --</option>
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
+        </select>
+        <select id="filterLLCT" onchange="filterMembersList()" class="rounded-md border border-slate-300 px-2 py-1 text-xs outline-none">
+          <option value="all">-- Lý luận chính trị --</option>
+          <option value="Cao cấp">Cao cấp / Cử nhân</option>
+          <option value="Trung cấp">Trung cấp</option>
+          <option value="Sơ cấp">Sơ cấp</option>
+          <option value="Chưa qua đào tạo">Chưa qua đào tạo</option>
+        </select>
+        <select id="filterRank" onchange="filterMembersList()" class="rounded-md border border-slate-300 px-2 py-1 text-xs outline-none">
+          <option value="all">-- Xếp loại đảng viên --</option>
+          <option value="Hoàn thành xuất sắc nhiệm vụ">HTXSNV (Xuất sắc)</option>
+          <option value="Hoàn thành tốt nhiệm vụ">HTTNV (Tốt)</option>
+          <option value="Hoàn thành nhiệm vụ">HTNV (Hoàn thành)</option>
+          <option value="Không hoàn thành nhiệm vụ">KHTNV (Không hoàn thành)</option>
+        </select>
+        <button onclick="clearMemberFilters()" class="text-slate-500 hover:text-red-600 text-xs ml-auto">
+          Xóa bộ lọc
+        </button>
+      </div>
+
+      <!-- Bảng hiển thị danh sách Đảng viên -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left text-slate-700">
+            <thead class="bg-slate-800 text-white uppercase text-[11px] font-bold">
+              <tr>
+                <th class="px-2.5 py-3 text-center w-10">STT</th>
+                <th class="px-3 py-3">Họ và Tên</th>
+                <th class="px-2 py-3 text-center">Ngày sinh</th>
+                <th class="px-2 py-3 text-center">Giới tính</th>
+                <th class="px-2 py-3 text-center">Dân tộc</th>
+                <th class="px-3 py-3">Quê quán</th>
+                <th class="px-3 py-3">Chức vụ Đảng / CQ</th>
+                <th class="px-2.5 py-3 text-center">Ngày vào Đảng</th>
+                <th class="px-2.5 py-3 text-center">Ngày chính thức</th>
+                <th class="px-3 py-3">Chuyên môn nghiệp vụ</th>
+                <th class="px-2.5 py-3">Lý luận CT</th>
+                <th class="px-2 py-3 text-center">Ngoại ngữ</th>
+                <th class="px-2.5 py-3 text-center">Tình trạng</th>
+                <th class="px-3 py-3">Ghi chú điều động</th>
+                <th class="px-2 py-3 text-center w-16">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="membersTableBody" class="divide-y divide-slate-200">
+              <!-- Render tự động qua JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="p-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-600">
+          <div>
+            Hiển thị <span id="showingMembersCount" class="font-bold text-slate-900">0</span> / tổng số <span id="totalMembersCount" class="font-bold text-slate-900">0</span> đồng chí
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Chính thức
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 ml-2"></span> Dự bị
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-slate-400 ml-2"></span> Miễn SH
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= TAB 3: THỐNG KÊ TIÊU CHÍ & BÁO CÁO SỐ LIỆU ĐẢNG ================= -->
+    <div id="tab-stats" class="tab-content hidden flex flex-col gap-4">
+      
+      <!-- Header Thống Kê -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-chart-column text-red-700"></i> BÁO CÁO THỐNG KÊ TIÊU CHÍ CÔNG TÁC ĐẢNG
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Dữ liệu tổng hợp trực tiếp từ danh sách Đảng viên chi bộ phục vụ báo cáo đại hội và báo cáo định kỳ
+          </p>
+        </div>
+
+        <button onclick="generateStatsReportDoc()" type="button"
+          class="px-4 py-2 rounded-lg bg-red-700 hover:bg-red-800 text-white text-xs font-bold transition flex items-center gap-2 shadow-sm">
+          <i class="fa-solid fa-file-circle-check text-amber-300"></i> Tạo Báo Cáo Thống Kê Số Liệu Chuẩn A4
+        </button>
+      </div>
+
+      <!-- HÀNG THẺ KPI TỔNG HỢP -->
+      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        <div class="bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-semibold text-slate-500">Tổng số Đảng viên</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="kpiTotalMembers" class="text-2xl font-black text-red-800">0</span>
+            <span class="text-xs text-slate-500 font-medium">đồng chí</span>
+          </div>
+          <div class="mt-2 text-[11px] text-slate-600 flex justify-between">
+            <span>Chính thức: <b id="kpiOfficialMembers" class="text-emerald-700">0</b></span>
+            <span>Dự bị: <b id="kpiProbationMembers" class="text-amber-600">0</b></span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-semibold text-slate-500">Tỉ lệ Giới tính</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="kpiFemaleRatio" class="text-2xl font-black text-slate-800">0%</span>
+            <span class="text-xs text-slate-500 font-medium">Đảng viên Nữ</span>
+          </div>
+          <div class="mt-2 text-[11px] text-slate-600 flex justify-between">
+            <span>Nam: <b id="kpiMaleCount">0</b></span>
+            <span>Nữ: <b id="kpiFemaleCount">0</b></span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-semibold text-slate-500">Dân tộc thiểu số</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="kpiEthnicCount" class="text-2xl font-black text-slate-800">0</span>
+            <span class="text-xs text-slate-500 font-medium">đồng chí</span>
+          </div>
+          <div class="mt-2 text-[11px] text-slate-600">
+            Tỉ lệ: <b id="kpiEthnicRatio" class="text-blue-700">0%</b> tổng số
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-semibold text-slate-500">Đại học & Trên ĐH</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="kpiUniversityRatio" class="text-2xl font-black text-blue-700">0%</span>
+            <span class="text-xs text-slate-500 font-medium">trình độ CM</span>
+          </div>
+          <div class="mt-2 text-[11px] text-slate-600">
+            Số lượng: <b id="kpiUniversityCount">0</b> đồng chí
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-semibold text-slate-500">Lý luận CT Trung cấp +</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="kpiLLCTMidRatio" class="text-2xl font-black text-amber-600">0%</span>
+            <span class="text-xs text-slate-500 font-medium">đạt chuẩn</span>
+          </div>
+          <div class="mt-2 text-[11px] text-slate-600">
+            Số lượng: <b id="kpiLLCTMidCount">0</b> đồng chí
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <span class="text-xs font-semibold text-slate-500">Xếp loại Tốt & Xuất sắc</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="kpiGoodRankRatio" class="text-2xl font-black text-emerald-700">0%</span>
+            <span class="text-xs text-slate-500 font-medium">chất lượng</span>
+          </div>
+          <div class="mt-2 text-[11px] text-slate-600">
+            Xuất sắc: <b id="kpiExcellentCount">0</b> đ/c
+          </div>
+        </div>
+      </div>
+
+      <!-- KHỐI BIỂU ĐỒ & BẢNG PHÂN TÍCH TIÊU CHÍ -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        
+        <!-- BIỂU ĐỒ 1: CƠ CẤU TRÌNH ĐỘ CHUYÊN MÔN -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+            <h3 class="text-xs font-bold text-slate-800 uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-graduation-cap text-blue-700"></i> Cơ cấu Trình độ Chuyên môn
+            </h3>
+            <span class="text-[11px] text-slate-500">Tiêu chuẩn đội ngũ</span>
+          </div>
+          <div id="chartEducationContainer" class="space-y-2.5 text-xs">
+            <!-- Render thanh tiến trình qua JS -->
+          </div>
+        </div>
+
+        <!-- BIỂU ĐỒ 2: CƠ CẤU LÝ LUẬN CHÍNH TRỊ -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+            <h3 class="text-xs font-bold text-slate-800 uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-landmark text-amber-600"></i> Trình độ Lý luận Chính trị
+            </h3>
+            <span class="text-[11px] text-slate-500">Chuẩn hóa cán bộ</span>
+          </div>
+          <div id="chartLLCTContainer" class="space-y-2.5 text-xs">
+            <!-- Render thanh tiến trình qua JS -->
+          </div>
+        </div>
+
+        <!-- BIỂU ĐỒ 3: PHÂN BỐ ĐỘ TUỔI & TUỔI ĐẢNG -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+            <h3 class="text-xs font-bold text-slate-800 uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-hourglass-half text-emerald-700"></i> Phân bố Nhóm Tuổi Đời & Tuổi Đảng
+            </h3>
+            <span class="text-[11px] text-slate-500">Kế thừa và phát triển</span>
+          </div>
+          <div id="chartAgeContainer" class="space-y-2.5 text-xs">
+            <!-- Render thanh tiến trình qua JS -->
+          </div>
+        </div>
+
+        <!-- BIỂU ĐỒ 4: KẾT QUẢ ĐÁNH GIÁ XẾP LOẠI CHẤT LƯỢNG HÀNG NĂM -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+            <h3 class="text-xs font-bold text-slate-800 uppercase flex items-center gap-1.5">
+              <i class="fa-solid fa-award text-red-700"></i> Xếp loại Chất lượng Đảng viên
+            </h3>
+            <span class="text-[11px] text-slate-500">Năm đánh giá gần nhất</span>
+          </div>
+          <div id="chartRankContainer" class="space-y-2.5 text-xs">
+            <!-- Render thanh tiến trình qua JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= TAB 4: HƯỚNG DẪN THỂ THỨC 36-HD/VPTW & QUY ĐỊNH 66 ================= -->
+    <div id="tab-guide" class="tab-content hidden flex flex-col gap-4">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 max-w-4xl mx-auto space-y-6">
+        
+        <div class="border-b border-slate-200 pb-4 text-center">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-red-800 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
+            CẨM NANG THỂ THỨC VĂN BẢN CỦA ĐẢNG
+          </span>
+          <h2 class="text-xl font-bold text-slate-900 mt-2">
+            HƯỚNG DẪN SỐ 36-HD/VPTW & QUY ĐỊNH SỐ 66-QĐ/TW
+          </h2>
+          <p class="text-xs text-slate-600 mt-1">
+            Quy định về thể thức và kỹ thuật trình bày văn bản của các cơ quan, tổ chức Đảng
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-700">
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+            <h3 class="font-bold text-red-900 text-sm flex items-center gap-1.5">
+              <i class="fa-solid fa-ruler-combined"></i> 1. Khổ giấy & Canh lề A4
+            </h3>
+            <p>• <b>Khổ giấy:</b> A4 (210 mm x 297 mm), đặt chiều đứng.</p>
+            <p>• <b>Lề trên (Top):</b> 20 - 25 mm.</p>
+            <p>• <b>Lề dưới (Bottom):</b> 20 - 25 mm.</p>
+            <p>• <b>Lề trái (Left - lề đóng gáy):</b> 30 - 35 mm.</p>
+            <p>• <b>Lề phải (Right):</b> 15 - 20 mm.</p>
+            <p>• <b>Phông chữ:</b> Chuẩn <i>Times New Roman</i>, màu đen.</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+            <h3 class="font-bold text-red-900 text-sm flex items-center gap-1.5">
+              <i class="fa-solid fa-heading"></i> 2. Tiêu đề cơ quan & Quốc hiệu Đảng
+            </h3>
+            <p>• <b>Cơ quan cấp trên:</b> Chữ in hoa, đứng, cỡ 12 - 13pt.</p>
+            <p>• <b>Tên cơ quan/Chi bộ ban hành:</b> Chữ in hoa, đậm, cỡ 12 - 13pt (có gạch chân dưới bằng độ dài dòng chữ).</p>
+            <p>• <b>Tiêu ngữ Đảng:</b> <b>ĐẢNG CỘNG SẢN VIỆT NAM</b>, chữ in hoa đậm, cỡ 13 - 14pt.</p>
+            <p>• <b>Địa danh, ngày tháng:</b> Chữ in thường nghiêng, cỡ 13 - 14pt (VD: <i>Tam Kim, ngày 15 tháng 10 năm 2026</i>).</p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+            <h3 class="font-bold text-red-900 text-sm flex items-center gap-1.5">
+              <i class="fa-solid fa-list-ol"></i> 3. Ký hiệu viết tắt văn bản của Đảng
+            </h3>
+            <p>• Báo cáo: <b>-BC/CB</b></p>
+            <p>• Nghị quyết: <b>-NQ/CB</b></p>
+            <p>• Biên bản: <b>-BB/CB</b></p>
+            <p>• Kế hoạch: <b>-KH/CB</b></p>
+            <p>• Quyết định: <b>-QĐ/CB</b></p>
+            <p>• Tờ trình: <b>-TTr/CB</b> | Thông báo: <b>-TB/CB</b></p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+            <h3 class="font-bold text-red-900 text-sm flex items-center gap-1.5">
+              <i class="fa-solid fa-signature"></i> 4. Thẩm quyền ký & Nơi nhận
+            </h3>
+            <p>• <b>Ký thay mặt Chi ủy/Chi bộ:</b> Ghi <b>T/M CHI ỦY</b> hoặc <b>T/M CHI BỘ</b> (chữ in hoa đậm).</p>
+            <p>• <b>Chức danh người ký:</b> <b>BÍ THƯ</b>, <b>PHÓ BÍ THƯ</b> hoặc <b>THƯ KÝ</b> (in hoa đậm).</p>
+            <p>• <b>Họ và tên người ký:</b> Chữ in thường đậm hoặc in hoa đậm (đặt dưới khoảng trống 3 - 4 dòng để ký).</p>
+            <p>• <b>Nơi nhận:</b> Đặt góc dưới bên trái, cỡ chữ 11 - 12pt nghiêng, có gạch chân tiêu đề.</p>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 p-4 rounded-xl border border-amber-300 text-xs text-amber-950 space-y-1">
+          <p class="font-bold flex items-center gap-1.5 text-amber-900">
+            <i class="fa-solid fa-lightbulb"></i> LƯU Ý KHI SOẠN THẢO TRÊN TRANG WEB NÀY:
+          </p>
+          <p>Tất cả các mẫu văn bản trên hệ thống đã được cài đặt sẵn 100% đúng tỷ lệ khoảng cách, cỡ chữ, căn lề và định dạng theo Quy định 66-QĐ/TW. Khi bấm nút <b>Xuất Word (.doc)</b> hoặc <b>In / PDF A4</b>, định dạng sẽ giữ nguyên chuẩn mực để trình ký và lưu trữ văn thư chi bộ.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= TAB 5: KHO VĂN BẢN ĐÃ LƯU ================= -->
+    <div id="tab-saved" class="tab-content hidden flex flex-col gap-4">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-box-archive text-red-700"></i> KHO LƯU TRỮ VĂN BẢN ĐÃ SOẠN
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Lưu trữ trên trình duyệt của đồng chí, không bị mất khi đóng trang web
+          </p>
+        </div>
+        <button onclick="clearAllSavedDocs()" type="button" class="text-xs text-red-600 hover:underline font-semibold">
+          Xóa toàn bộ kho lưu trữ
+        </button>
+      </div>
+
+      <div id="savedDocumentsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <!-- Render danh sách văn bản đã lưu bằng JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL THÊM / SỬA ĐẢNG VIÊN -->
+  <div id="memberModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-300">
+      
+      <div class="bg-gradient-to-r from-red-900 to-red-800 text-white px-5 py-3.5 flex items-center justify-between sticky top-0 z-10">
+        <h3 id="modalMemberTitle" class="text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-user-pen text-amber-300"></i> Thêm Đảng Viên Mới
+        </h3>
+        <button onclick="closeMemberModal()" class="text-white hover:text-amber-300 text-lg font-bold">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="memberForm" onsubmit="saveMember(event)" class="p-5 space-y-4 text-xs">
+        <input type="hidden" id="m_id" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="sm:col-span-2">
+            <label class="block font-bold text-slate-700 mb-1">Họ và Tên (*):</label>
+            <input id="m_name" type="text" required placeholder="VD: Nông Văn Khiêm"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 font-bold focus:ring-1 focus:ring-red-600 outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Năm sinh:</label>
+            <input id="m_birthYear" type="number" value="1985"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:ring-1 focus:ring-red-600 outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Giới tính:</label>
+            <select id="m_gender" class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none">
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Dân tộc:</label>
+            <input id="m_ethnic" type="text" value="Tày"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Tôn giáo:</label>
+            <input id="m_religion" type="text" value="Không"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Chức vụ trong Đảng:</label>
+            <select id="m_partyRole" class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none font-medium">
+              <option value="Đảng viên">Đảng viên</option>
+              <option value="Bí thư Chi bộ">Bí thư Chi bộ</option>
+              <option value="Phó Bí thư Chi bộ">Phó Bí thư Chi bộ</option>
+              <option value="Chi ủy viên">Chi ủy viên</option>
+              <option value="Tổ trưởng Đảng">Tổ trưởng Đảng</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Chức vụ chuyên môn / CQ:</label>
+            <input id="m_govRole" type="text" value="Hiệu trưởng" placeholder="VD: Hiệu trưởng, Giáo viên..."
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Số thẻ Đảng viên:</label>
+            <input id="m_cardNo" type="text" placeholder="VD: 12345678"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Ngày vào Đảng:</label>
+            <input id="m_joinDate" type="text" value="19/05/2012" placeholder="dd/mm/yyyy"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Ngày chính thức:</label>
+            <input id="m_officialDate" type="text" value="19/05/2013" placeholder="dd/mm/yyyy"
+              class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Trình độ chuyên môn:</label>
+            <select id="m_education" class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none">
+              <option value="Thạc sĩ">Thạc sĩ</option>
+              <option value="Đại học">Đại học</option>
+              <option value="Cao đẳng">Cao đẳng</option>
+              <option value="Trung cấp">Trung cấp</option>
+              <option value="Tiến sĩ">Tiến sĩ</option>
+              <option value="THPT">THPT</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Trình độ Lý luận Chính trị:</label>
+            <select id="m_llct" class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none">
+              <option value="Trung cấp">Trung cấp</option>
+              <option value="Cao cấp">Cao cấp / Cử nhân</option>
+              <option value="Sơ cấp">Sơ cấp</option>
+              <option value="Chưa qua đào tạo">Chưa qua đào tạo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Tình trạng sinh hoạt:</label>
+            <select id="m_status" class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none">
+              <option value="Chính thức">Chính thức (Sinh hoạt bình thường)</option>
+              <option value="Dự bị">Dự bị</option>
+              <option value="Miễn SH">Miễn sinh hoạt Đảng</option>
+              <option value="Tạm miễn">Tạm miễn sinh hoạt Đảng</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Đánh giá xếp loại năm:</label>
+            <select id="m_ranking" class="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none">
+              <option value="Hoàn thành xuất sắc nhiệm vụ">Hoàn thành xuất sắc nhiệm vụ</option>
+              <option value="Hoàn thành tốt nhiệm vụ">Hoàn thành tốt nhiệm vụ</option>
+              <option value="Hoàn thành nhiệm vụ">Hoàn thành nhiệm vụ</option>
+              <option value="Không hoàn thành nhiệm vụ">Không hoàn thành nhiệm vụ</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
+          <button type="button" onclick="closeMemberModal()"
+            class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs">
+            Hủy bỏ
+          </button>
+          <button type="submit"
+            class="px-5 py-2 rounded-lg bg-red-700 hover:bg-red-800 text-white font-bold text-xs shadow-sm">
+            Lưu Thông Tin
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT HỆ THỐNG CÔNG TÁC ĐẢNG -->
+  <script>
+    // ================= DỮ LIỆU BAN ĐẦU & STATE =================
+    let currentRole = 'chiuy'; // 'chiuy' | 'thuky' | 'dangvien'
+    let currentTemplateKey = 'bc_thang';
+    let currentFilterKey = 'all';
+
+    // Dữ liệu Đảng viên mẫu ban đầu
+    const defaultMembers = [
+      {
+            "id": "1",
+            "stt": "1",
+            "name": "Nông Văn Khiêm",
+            "birthYear": 1979,
+            "birthDate": "22/8/1979",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Tam Kim, Cao Bằng",
+            "partyRole": "Bí thư Chi bộ",
+            "govRole": "Hiệu trưởng",
+            "cardNo": "4079003296",
+            "joinDate": "19/5/2011",
+            "officialDate": "19/5/2012",
+            "education": "Đại học",
+            "chuyenmon": "ĐHSP Sinh",
+            "llct": "Trung cấp",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành xuất sắc nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "2",
+            "stt": "2",
+            "name": "Nông Thị Duyên",
+            "birthYear": 1985,
+            "birthDate": "06/01/1985",
+            "gender": "Nữ",
+            "ethnic": "Nùng",
+            "religion": "Không",
+            "hometown": "Minh Tâm, Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4185000825",
+            "joinDate": "11/7/2018",
+            "officialDate": "11/7/2019",
+            "education": "Đại học",
+            "chuyenmon": "ĐHSP Mỹ Thuật",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "3",
+            "stt": "3",
+            "name": "Lương Thị Hương",
+            "birthYear": 1985,
+            "birthDate": "15/08/1985",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Minh Thanh- Nguyên Bình- Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Tổ trưởng / Thư ký",
+            "cardNo": "4185000764",
+            "joinDate": "22/03/2015",
+            "officialDate": "22/03/2016",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Tin học",
+            "llct": "Sơ cấp",
+            "ngoaingu": "Tiếng Anh A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành xuất sắc nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "4",
+            "stt": "4",
+            "name": "Ma Thị Lai",
+            "birthYear": 1983,
+            "birthDate": "24/05/1983",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Minh Tâm, Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4183003795",
+            "joinDate": "04/07/2023",
+            "officialDate": "04/07/2024",
+            "education": "Đại học",
+            "chuyenmon": "ĐH Sư phạm Địa lí",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "5",
+            "stt": "5",
+            "name": "Hoàng Thị Thám",
+            "birthYear": 1990,
+            "birthDate": "11/09/1990",
+            "gender": "Nữ",
+            "ethnic": "Nùng",
+            "religion": "Không",
+            "hometown": "xã Nguyên Bình, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "",
+            "joinDate": "07/05/2025",
+            "officialDate": "",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Tiếng Anh",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "B2",
+            "status": "Dự bị",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "6",
+            "stt": "6",
+            "name": "Nông Thị Thảo",
+            "birthYear": 1987,
+            "birthDate": "07/10/1987",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "xã Tam Kim, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4187000760",
+            "joinDate": "11/05/2024",
+            "officialDate": "11/05/2025",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Ngữ Văn",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "7",
+            "stt": "7",
+            "name": "Lương Thị Thới",
+            "birthYear": 1989,
+            "birthDate": "13/10/1989",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Xã Đình Phong, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "",
+            "joinDate": "19/05/2026",
+            "officialDate": "",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Toán học",
+            "llct": "Sơ cấp",
+            "ngoaingu": "TOEFL",
+            "status": "Dự bị",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "8",
+            "stt": "8",
+            "name": "Hà Quốc Toản",
+            "birthYear": 1982,
+            "birthDate": "10/9/1982",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "xã Nguyên Bình, tỉnh Cao Bằng",
+            "partyRole": "Phó Bí thư Chi bộ",
+            "govRole": "Phó Hiệu trưởng",
+            "cardNo": "2039778",
+            "joinDate": "02/12/2011",
+            "officialDate": "02/11/2011",
+            "education": "Đại học",
+            "chuyenmon": "ĐHSP Toán",
+            "llct": "Trung cấp",
+            "ngoaingu": "Tiếng Anh A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành xuất sắc nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "9",
+            "stt": "9",
+            "name": "Long Thị Viễn",
+            "birthYear": 1992,
+            "birthDate": "21/03/1992",
+            "gender": "Nữ",
+            "ethnic": "Nùng",
+            "religion": "Không",
+            "hometown": "Xã Quảng Uyên, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "",
+            "joinDate": "",
+            "officialDate": "",
+            "education": "Đại học",
+            "chuyenmon": "Sư pham Sinh học",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "B",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "10",
+            "stt": "10",
+            "name": "Lê Quang Tân",
+            "birthYear": 1991,
+            "birthDate": "07/09/1991",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Tổ dân phố Na Lữ, phường Thục Phán, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Viên chức y tế",
+            "cardNo": "4091003336",
+            "joinDate": "03/11/2022",
+            "officialDate": "03/11/2023",
+            "education": "Trung cấp",
+            "chuyenmon": "Y sĩ đa khoa",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "11",
+            "stt": "11",
+            "name": "Nguyễn Ngô Ban",
+            "birthYear": 1981,
+            "birthDate": "17/01/1981",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Tổ dân phố 7, phường Nùng Trí Cao, tỉnh Cao Bằng",
+            "partyRole": "Chi ủy viên",
+            "govRole": "Chủ tịch Công đoàn",
+            "cardNo": "2036228",
+            "joinDate": "19/5/2010",
+            "officialDate": "19/05/2010",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Toán",
+            "llct": "Trung cấp",
+            "ngoaingu": "Anh A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "01/8/2021 Đảng bộ xã Phan Thanh, Nguyễn Bình, Cao Bằng"
+      },
+      {
+            "id": "12",
+            "stt": "12",
+            "name": "Hoàng Thị Thu Hà",
+            "birthYear": 1984,
+            "birthDate": "30/10/1984",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Xã Hạnh Phúc, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "",
+            "joinDate": "19/05/2025",
+            "officialDate": "",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Toán",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Dự bị",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "13",
+            "stt": "13",
+            "name": "Nguyễn Văn Duyến",
+            "birthYear": 1984,
+            "birthDate": "10/08/1984",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Trung Nhị, P.Thục Phán, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "2049787",
+            "joinDate": "25/12/2014",
+            "officialDate": "15/12/2014",
+            "education": "Đại học",
+            "chuyenmon": "Sp KTCN",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "B",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "14",
+            "stt": "14",
+            "name": "Hoàng Thị Hiền",
+            "birthYear": 1989,
+            "birthDate": "25/06/1989",
+            "gender": "Nữ",
+            "ethnic": "Nùng",
+            "religion": "Không",
+            "hometown": "Xã Nà Phặc, tỉnh Thái Nguyên",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "2068137",
+            "joinDate": "09/08/2022",
+            "officialDate": "09/08/2023",
+            "education": "Đại học",
+            "chuyenmon": "Sp Ngữ văn",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "15",
+            "stt": "15",
+            "name": "Lô Thị Lựu",
+            "birthYear": 1984,
+            "birthDate": "11/05/1984",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "TDP Hạnh Phúc, Phường Thục Phán, Tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "2049788",
+            "joinDate": "11/5/2015",
+            "officialDate": "25/11/2015",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Tiếng Anh",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "B2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "16",
+            "stt": "16",
+            "name": "Lê Thị Nhung",
+            "birthYear": 1984,
+            "birthDate": "09/11/1984",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Lam Sơn, Xã Hòa An, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "2046092",
+            "joinDate": "02/09/2014",
+            "officialDate": "02/09/2014",
+            "education": "Đại học",
+            "chuyenmon": "SP Địa lí",
+            "llct": "Trung cấp",
+            "ngoaingu": "B",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "8/2024 Đảng bộ xã Quang Thành\nNguyên Bình, Cao Bằng"
+      },
+      {
+            "id": "17",
+            "stt": "17",
+            "name": "Nguyễn Thị Tý",
+            "birthYear": 1984,
+            "birthDate": "17/12/1984",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "xóm Phai Khắt, xã Tam Kim, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4184000770",
+            "joinDate": "01/06/2024",
+            "officialDate": "01/06/2025",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Toán",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "18",
+            "stt": "18",
+            "name": "Mạc Văn Thông",
+            "birthYear": 1983,
+            "birthDate": "08/10/1983",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Xóm Gia Bằng, xã Minh Tâm, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "483000474000000000",
+            "joinDate": "30/11/2017",
+            "officialDate": "30/11/2017",
+            "education": "Đại học",
+            "chuyenmon": "sư phạm Ngữ văn",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "Anh A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "19",
+            "stt": "19",
+            "name": "Tô Đình Vương",
+            "birthYear": 1984,
+            "birthDate": "30/10/1984",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Bản Um, xã Tam Kim, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "2063840",
+            "joinDate": "31/05/2019",
+            "officialDate": "31/05/2020",
+            "education": "Đại học",
+            "chuyenmon": "Sp Âm nhạc",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "20",
+            "stt": "20",
+            "name": "Hoàng Nguyễn Tuyên",
+            "birthYear": 1990,
+            "birthDate": "19/05/1990",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Nà An, xã Tam Kim, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Nhân viên bảo vệ",
+            "cardNo": "",
+            "joinDate": "18/07/2024",
+            "officialDate": "18/07/2025",
+            "education": "THPT",
+            "chuyenmon": "",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "",
+            "status": "Dự bị",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": ""
+      },
+      {
+            "id": "21",
+            "stt": "21",
+            "name": "Bế Hoài Thu",
+            "birthYear": 1978,
+            "birthDate": "06/05/1978",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Xóm Đầu Cầu 1, xã Độc Lập",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4178004269",
+            "joinDate": "25/04/2007",
+            "officialDate": "25/04/2008",
+            "education": "Đại học",
+            "chuyenmon": "SP Ngữ Văn",
+            "llct": "Trung cấp",
+            "ngoaingu": "Anh A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "9/2006 Đảng bộ Thị trấn Nguyên Bình, huyện Nguyên Bình, tỉnh Cao Bằng."
+      },
+      {
+            "id": "22",
+            "stt": "22",
+            "name": "Hoàng Văn Bộ",
+            "birthYear": 1976,
+            "birthDate": "22/03/1976",
+            "gender": "Nam",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "xóm Bình Minh xã Mình Tâm ,Tỉnh cao bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4076000383",
+            "joinDate": "20/11/2010",
+            "officialDate": "20/11/2011",
+            "education": "Đại học",
+            "chuyenmon": "SP Giáo dục công dân",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "Đảng bộ xã Hoa Thám"
+      },
+      {
+            "id": "23",
+            "stt": "23",
+            "name": "Nông Thị Bời",
+            "birthYear": 1979,
+            "birthDate": "24/08/1979",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Phai Khắt, xã Tam Kim, Tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "2031304",
+            "joinDate": "09/05/2008",
+            "officialDate": "29/03/2008",
+            "education": "Đại học",
+            "chuyenmon": "Sp Toán",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "8/2022 Đảng bộ xã Quang Thành\nNguyên Bình, Cao Bằng"
+      },
+      {
+            "id": "24",
+            "stt": "24",
+            "name": "Diệp Thị Huyền",
+            "birthYear": 1984,
+            "birthDate": "28/01/1984",
+            "gender": "Nữ",
+            "ethnic": "Kinh",
+            "religion": "Không",
+            "hometown": "Xã Trường Ninh, tỉnh Quảng Trị",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "",
+            "joinDate": "10/07/2024",
+            "officialDate": "10/07/2025",
+            "education": "Đại học",
+            "chuyenmon": "SP KTCN",
+            "llct": "Sơ cấp",
+            "ngoaingu": "B",
+            "status": "Dự bị",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "01/08/2024 Đảng bộ xã Yên Lạc"
+      },
+      {
+            "id": "25",
+            "stt": "25",
+            "name": "Ma Thị Hường",
+            "birthYear": 1984,
+            "birthDate": "16/04/1984",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Minh Tâm - Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4184000778",
+            "joinDate": "09/02/2017",
+            "officialDate": "09/02/2018",
+            "education": "Đại học",
+            "chuyenmon": "Sp Âm nhạc",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "01/8/2024 Đảng bộ Thị Trấn Nguyên Bình"
+      },
+      {
+            "id": "26",
+            "stt": "26",
+            "name": "Hoàng Thị Lim",
+            "birthYear": 1984,
+            "birthDate": "01/04/1984",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Xóm Gia Bằng, xã Minh Tâm, tỉnh Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4184000678",
+            "joinDate": "29/11/2012",
+            "officialDate": "29/11/2013",
+            "education": "Đại học",
+            "chuyenmon": "Sư phạm Toán",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "Anh A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "01/8/2023, Đảng Bộ xã Ca Thành, Nguyên Bình, Cao Bằng"
+      },
+      {
+            "id": "27",
+            "stt": "27",
+            "name": "Chu Thị Nhậy",
+            "birthYear": 1982,
+            "birthDate": "30/01/1982",
+            "gender": "Nữ",
+            "ethnic": "Dao",
+            "religion": "Không",
+            "hometown": "Xã Minh Tâm - Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4182000521",
+            "joinDate": "26/03/2009",
+            "officialDate": "26/03/2010",
+            "education": "Đại học",
+            "chuyenmon": "SP sinh học",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "1/8/2024 Đảng bộ xã Vũ Minh"
+      },
+      {
+            "id": "28",
+            "stt": "28",
+            "name": "Chu Văn Tình",
+            "birthYear": 1984,
+            "birthDate": "24/10/1984",
+            "gender": "Nam",
+            "ethnic": "Dao",
+            "religion": "Không",
+            "hometown": "xã Tam Kim - Cao Bằng",
+            "partyRole": "Đảng viên",
+            "govRole": "Giáo viên",
+            "cardNo": "4084000558",
+            "joinDate": "08/11/2007",
+            "officialDate": "08/11/2008",
+            "education": "Đại học",
+            "chuyenmon": "SP Ngữ văn",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "A2",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "Đảng bộ xã Hoa Thám"
+      },
+      {
+            "id": "29",
+            "stt": "30",
+            "name": "Đinh Thị Hiền",
+            "birthYear": 1985,
+            "birthDate": "17/03/1985",
+            "gender": "Nữ",
+            "ethnic": "Tày",
+            "religion": "Không",
+            "hometown": "Xã Vĩnh Thông- Thái Nguyên",
+            "partyRole": "Đảng viên",
+            "govRole": "Nhân viên",
+            "cardNo": "6185000283",
+            "joinDate": "18/09/2022",
+            "officialDate": "18/09/2023",
+            "education": "Trung cấp",
+            "chuyenmon": "TV-TB",
+            "llct": "Chưa qua đào tạo",
+            "ngoaingu": "TOEFL",
+            "status": "Chính thức",
+            "ranking": "Hoàn thành tốt nhiệm vụ",
+            "note": "1/8/2023 Đảng bộ xã Vũ Minh"
+      }
+];
+
+    let membersList = [];
+
+    // Danh mục các mẫu văn bản Đảng hỗ trợ
+    const templatesCatalog = [
+      {
+        key: 'bc_thang',
+        category: 'baocao',
+        code: '-BC/CB',
+        name: 'Báo cáo công tác Đảng tháng & Sinh hoạt Chi bộ',
+        desc: 'Đánh giá công tác lãnh đạo thực hiện nhiệm vụ chính trị tháng qua và phương hướng tháng tới.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'bc_tongket',
+        category: 'baocao',
+        code: '-BC/CB',
+        name: 'Báo cáo tổng kết công tác Đảng năm',
+        desc: 'Tổng kết toàn diện công tác xây dựng Đảng, chính trị tư tưởng, tổ chức và chuyên môn.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'bc_kiemdiem_chiuy',
+        category: 'baocao',
+        code: '-BC/CB',
+        name: 'Báo cáo kiểm điểm sự lãnh đạo của Ban Chi ủy',
+        desc: 'Kiểm điểm trách nhiệm tập thể Chi ủy trong lãnh đạo thực hiện nghị quyết chi bộ cuối năm.',
+        roles: ['chiuy'],
+        signer: 'T/M BAN CHI ỦY'
+      },
+      {
+        key: 'bc_thongke',
+        category: 'baocao',
+        code: '-BC/CB',
+        name: 'Báo cáo thống kê số liệu & đội ngũ Đảng viên',
+        desc: 'Tổng hợp số lượng, tỷ lệ giới tính, dân tộc, học vấn, lý luận chính trị và xếp loại.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'nq_thuongky',
+        category: 'nghiquyet',
+        code: '-NQ/CB',
+        name: 'Nghị quyết sinh hoạt Chi bộ thường kỳ',
+        desc: 'Nghị quyết lãnh đạo các mặt công tác hàng tháng của chi bộ theo Điều lệ Đảng.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'nq_chuyende',
+        category: 'nghiquyet',
+        code: '-NQ/CB',
+        name: 'Nghị quyết sinh hoạt Chi bộ chuyên đề',
+        desc: 'Nghị quyết chuyên đề về Học tập và làm theo tư tưởng đạo đức phong cách Hồ Chí Minh...',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'nq_ketnap',
+        category: 'nghiquyet',
+        code: '-NQ/CB',
+        name: 'Nghị quyết đề nghị kết nạp đảng viên mới',
+        desc: 'Nghị quyết xem xét đề nghị Đảng ủy cấp trên kết nạp quần chúng ưu tú vào Đảng.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'nq_chinhthuc',
+        category: 'nghiquyet',
+        code: '-NQ/CB',
+        name: 'Nghị quyết đề nghị công nhận Đảng viên chính thức',
+        desc: 'Nghị quyết đề nghị chuyển đảng chính thức cho đảng viên dự bị hết thời gian thử thách.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'bb_thuongky',
+        category: 'bienban',
+        code: '-BB/CB',
+        name: 'Biên bản sinh hoạt Chi bộ định kỳ',
+        desc: 'Ghi lại toàn bộ diễn biến, ý kiến thảo luận và kết luận cuộc họp sinh hoạt chi bộ hàng tháng.',
+        roles: ['thuky', 'chiuy'],
+        signer: 'CHỦ TRÌ & THƯ KÝ'
+      },
+      {
+        key: 'bb_chiuy',
+        category: 'bienban',
+        code: '-BB/CU',
+        name: 'Biên bản cuộc họp Ban Chi ủy',
+        desc: 'Biên bản họp chuẩn bị nội dung sinh hoạt chi bộ và bàn công tác nhân sự, tài chính đảng.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'CHỦ TRÌ & THƯ KÝ'
+      },
+      {
+        key: 'bb_kiemdiem',
+        category: 'bienban',
+        code: '-BB/CB',
+        name: 'Biên bản họp kiểm điểm đánh giá phân loại cuối năm',
+        desc: 'Biên bản nhận xét, góp ý và kết quả bỏ phiếu phân loại chất lượng tổ chức Đảng và đảng viên.',
+        roles: ['thuky', 'chiuy'],
+        signer: 'CHỦ TRÌ & THƯ KÝ'
+      },
+      {
+        key: 'kh_nam',
+        category: 'kehoach',
+        code: '-KH/CB',
+        name: 'Kế hoạch công tác năm của Chi bộ',
+        desc: 'Chương trình và kế hoạch toàn khóa/năm thực hiện các chỉ tiêu nghị quyết đại hội chi bộ.',
+        roles: ['chiuy'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'kh_kiemtra',
+        category: 'kehoach',
+        code: '-KH/CB',
+        name: 'Kế hoạch kiểm tra, giám sát của Chi bộ',
+        desc: 'Kế hoạch kiểm tra đảng viên chấp hành Điều lệ Đảng và thực hiện nhiệm vụ được giao.',
+        roles: ['chiuy'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'qd_phancong',
+        category: 'kehoach',
+        code: '-QĐ/CB',
+        name: 'Quyết định phân công nhiệm vụ Đảng viên',
+        desc: 'Quyết định phân công trách nhiệm cho từng Chi ủy viên và đảng viên trong chi bộ.',
+        roles: ['chiuy'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'ttr_khenthuong',
+        category: 'kehoach',
+        code: '-TTr/CB',
+        name: 'Tờ trình đề nghị khen thưởng tổ chức Đảng & Đảng viên',
+        desc: 'Tờ trình gửi Đảng ủy cấp trên đề nghị khen thưởng tập thể và cá nhân xuất sắc.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      },
+      {
+        key: 'kd_dangvien',
+        category: 'kiemdiem',
+        code: '-BKT',
+        name: 'Bản tự kiểm điểm Đảng viên cuối năm (Mẫu 02-HD/BTCTW)',
+        desc: 'Dành cho Đảng viên tự đánh giá ưu khuyết điểm, kết quả thực hiện nhiệm vụ để xếp loại.',
+        roles: ['dangvien', 'chiuy', 'thuky'],
+        signer: 'NGƯỜI TỰ KIỂM ĐIỂM'
+      },
+      {
+        key: 'phieu_gopy',
+        category: 'kiemdiem',
+        code: '-GY/ĐV',
+        name: 'Bản góp ý kiến xây dựng Chi bộ & Chi ủy',
+        desc: 'Đảng viên tham gia đóng góp giải pháp nâng cao năng lực lãnh đạo và sức chiến đấu của chi bộ.',
+        roles: ['dangvien'],
+        signer: 'ĐẢNG VIÊN'
+      },
+      {
+        key: 'tb_ketluan',
+        category: 'baocao',
+        code: '-TB/CB',
+        name: 'Thông báo kết luận cuộc họp Chi bộ',
+        desc: 'Thông báo nhanh nội dung kết luận và chỉ đạo của Bí thư chi bộ đến toàn thể đảng viên.',
+        roles: ['chiuy', 'thuky'],
+        signer: 'BÍ THƯ'
+      }
+    ];
+
+    // ================= KHỞI TẠO HỆ THỐNG KHI LOAD TRANG =================
+    document.addEventListener('DOMContentLoaded', () => {
+      loadMembersFromStorage();
+      renderTemplateButtons();
+      renderActiveDoc();
+      renderMembersTable();
+      calculateAndRenderStats();
+      renderSavedDocsList();
+      updateClock();
+      setInterval(updateClock, 1000);
+    });
+
+    function updateClock() {
+      const now = new Date();
+      const str = now.toLocaleDateString('vi-VN') + ' ' + now.toLocaleTimeString('vi-VN');
+      const el = document.getElementById('clockCurrent');
+      if (el) el.innerText = str;
+    }
+
+    // ================= PHÂN QUYỀN VAI TRÒ =================
+    function setRole(role) {
+      currentRole = role;
+      
+      const btnChiUy = document.getElementById('roleChiUyBtn');
+      const btnThuKy = document.getElementById('roleThuKyBtn');
+      const btnDangVien = document.getElementById('roleDangVienBtn');
+      const badge = document.getElementById('currentRoleBadge');
+      const instruct = document.getElementById('roleInstructionText');
+
+      [btnChiUy, btnThuKy, btnDangVien].forEach(b => {
+        b.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 text-slate-200 hover:bg-white/15';
+      });
+
+      if (role === 'chiuy') {
+        btnChiUy.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 bg-amber-400 text-red-950 shadow';
+        badge.className = 'badge-role-chiuy px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider text-[11px] flex items-center gap-1';
+        badge.innerHTML = '<i class="fa-solid fa-crown"></i> Ban Chi ủy';
+        instruct.innerText = 'Đặc quyền: Ban hành Báo cáo lãnh đạo, Nghị quyết, Kế hoạch công tác năm, Kế hoạch kiểm tra giám sát, Ký duyệt văn bản chính thức.';
+      } else if (role === 'thuky') {
+        btnThuKy.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 bg-sky-400 text-slate-950 shadow';
+        badge.className = 'badge-role-thuky px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider text-[11px] flex items-center gap-1';
+        badge.innerHTML = '<i class="fa-solid fa-pen-fancy"></i> Thư ký Chi bộ';
+        instruct.innerText = 'Đặc quyền: Soạn thảo Biên bản họp sinh hoạt chi bộ, Lập dự thảo Nghị quyết chi bộ, Tổng hợp biểu quyết và theo dõi danh sách dự họp.';
+      } else {
+        btnDangVien.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 bg-amber-400 text-amber-950 shadow';
+        badge.className = 'badge-role-dangvien px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider text-[11px] flex items-center gap-1';
+        badge.innerHTML = '<i class="fa-solid fa-users"></i> Đảng viên';
+        instruct.innerText = 'Đặc quyền: Soạn Bản tự kiểm điểm đảng viên cuối năm, Bản góp ý xây dựng chi bộ, Báo cáo tiến độ nhiệm vụ được phân công.';
+      }
+
+      renderTemplateButtons();
+      showToast('Đã chuyển vai trò làm việc: ' + (role === 'chiuy' ? 'Ban Chi ủy' : role === 'thuky' ? 'Thư ký' : 'Đảng viên'));
+    }
+
+    // ================= CHUYỂN ĐỔI TAB =================
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-red-800', 'text-white');
+        btn.classList.add('text-slate-200');
+      });
+
+      const activeTab = document.getElementById(tabId);
+      if (activeTab) activeTab.classList.remove('hidden');
+
+      const activeBtn = document.getElementById('tabBtn-' + tabId.replace('tab-', ''));
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-red-800', 'text-white');
+        activeBtn.classList.remove('text-slate-200');
+      }
+
+      if (tabId === 'tab-stats') calculateAndRenderStats();
+      if (tabId === 'tab-saved') renderSavedDocsList();
+    }
+
+    // ================= BỘ LỌC VÀ RENDER NÚT VĂN BẢN =================
+    function filterTemplates(cat) {
+      currentFilterKey = cat;
+      document.querySelectorAll('.tmpl-filter-btn').forEach(b => {
+        if (b.dataset.filter === cat) {
+          b.className = 'tmpl-filter-btn px-2.5 py-1 rounded text-xs font-semibold bg-red-800 text-white';
+        } else {
+          b.className = 'tmpl-filter-btn px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200';
+        }
+      });
+      renderTemplateButtons();
+    }
+
+    function renderTemplateButtons() {
+      const container = document.getElementById('templateButtonsGrid');
+      if (!container) return;
+
+      let filtered = templatesCatalog;
+
+      // Lọc theo danh mục
+      if (currentFilterKey !== 'all') {
+        filtered = filtered.filter(t => t.category === currentFilterKey);
+      }
+
+      // Đếm số lượng
+      document.getElementById('docTypeCountBadge').innerText = filtered.length + ' mẫu';
+
+      let html = '';
+      filtered.forEach(tmpl => {
+        const isCurrent = (tmpl.key === currentTemplateKey);
+        const isRoleMatch = tmpl.roles.includes(currentRole);
+
+        html += `
+          <div onclick="selectDocTemplate('${tmpl.key}')" 
+            class="p-2.5 rounded-lg border cursor-pointer transition text-left relative flex flex-col justify-between ${
+              isCurrent 
+                ? 'bg-red-50 border-red-600 shadow-sm ring-1 ring-red-600' 
+                : 'bg-white hover:bg-slate-50 border-slate-200'
+            }">
+            <div>
+              <div class="flex items-center justify-between gap-1 mb-1">
+                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                  tmpl.category === 'baocao' ? 'bg-blue-100 text-blue-800' :
+                  tmpl.category === 'nghiquyet' ? 'bg-red-100 text-red-800' :
+                  tmpl.category === 'bienban' ? 'bg-amber-100 text-amber-800' :
+                  tmpl.category === 'kehoach' ? 'bg-purple-100 text-purple-800' : 'bg-emerald-100 text-emerald-800'
+                }">${tmpl.code}</span>
+                ${isRoleMatch ? '<span class="text-[10px] text-emerald-600 font-bold">✓ Chuẩn vai trò</span>' : '<span class="text-[10px] text-slate-400">Tham khảo</span>'}
+              </div>
+              <h4 class="text-xs font-bold text-slate-900 leading-snug">${tmpl.name}</h4>
+              <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">${tmpl.desc}</p>
+            </div>
+            <div class="mt-2 pt-1 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400">
+              <span>Ký: <b>${tmpl.signer}</b></span>
+              <span class="text-red-700 font-bold hover:underline">Chọn tạo →</span>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function selectDocTemplate(key) {
+      currentTemplateKey = key;
+      const tmpl = templatesCatalog.find(t => t.key === key);
+      if (tmpl) {
+        document.getElementById('cfg_kyHieuText').innerText = tmpl.code;
+        document.getElementById('currentDocTitleBadge').innerText = tmpl.name;
+      }
+      renderTemplateButtons();
+      renderActiveDoc();
+      showToast('Đã nạp mẫu: ' + (tmpl ? tmpl.name : key));
+    }
+
+    // ================= TẠO & RENDER NỘI DUNG VĂN BẢN TRANG A4 CHUẨN THỂ THỨC =================
+    function renderActiveDoc() {
+      const page = document.getElementById('printableArea');
+      if (!page) return;
+
+      const capTren = document.getElementById('cfg_capTren').value.trim() || 'ĐẢNG ỦY XÃ TAM KIM';
+      const tenChiBo = document.getElementById('cfg_tenChiBo').value.trim() || 'Chi bộ Trường PTDTBT THCS Tam Kim';
+      const diaDanh = document.getElementById('cfg_diaDanh').value.trim() || 'Tam Kim';
+      const soHieu = document.getElementById('cfg_soHieu').value.trim() || '01';
+      const ngay = document.getElementById('cfg_ngay').value.trim() || '15';
+      const thang = document.getElementById('cfg_thang').value.trim() || '10';
+      const nam = document.getElementById('cfg_nam').value.trim() || '2026';
+      
+      const biThu = document.getElementById('cfg_biThu').value.trim() || 'Nông Văn Khiêm';
+      const phoBiThu = document.getElementById('cfg_phoBiThu').value.trim() || 'Hoàng Văn Minh';
+      const thuKy = document.getElementById('cfg_thuKy').value.trim() || 'Bế Thị Hương';
+      const chiUyVien = document.getElementById('cfg_chiUyVien').value.trim() || 'Nông Thị Lan';
+      const thoiGianDiaDiem = document.getElementById('cfg_thoiGianDiaDiem').value.trim() || '14 giờ 00 phút, tại Văn phòng Chi bộ';
+      const dangVienCoMat = document.getElementById('cfg_dangVienCoMat').value.trim() || '18/18 đồng chí (chính thức: 17, dự bị: 01)';
+
+      const basisLines = document.getElementById('customBasisInput').value.trim().split('\n').filter(l => l.trim().length > 0);
+      let basisHtml = '';
+      basisLines.forEach(line => {
+        basisHtml += `<p class="doc-basis-item">- ${line.trim()}</p>`;
+      });
+
+      const tmpl = templatesCatalog.find(t => t.key === currentTemplateKey) || templatesCatalog[0];
+      const kyHieuFull = `Số: ${soHieu}${tmpl.code}`;
+
+      let bodyContentHtml = '';
+
+      // Từng loại văn bản được sinh theo chuẩn Hướng dẫn 36-HD/VPTW
+      switch (tmpl.key) {
+        case 'bc_thang':
+          bodyContentHtml = `
+            <p class="doc-main-title">BÁO CÁO</p>
+            <p class="doc-sub-title">Tình hình công tác Đảng tháng ${thang} và phương hướng, nhiệm vụ trọng tâm tháng ${(parseInt(thang)%12)+1} năm ${nam}</p>
+            
+            ${basisHtml}
+
+            <p class="doc-heading-1">I. TÌNH HÌNH VÀ KẾT QUẢ CÔNG TÁC THÁNG ${thang}</p>
+            
+            <p class="doc-heading-2">1. Công tác chính trị, tư tưởng</p>
+            <p>Chi bộ đã tổ chức quán triệt nghiêm túc, kịp thời các chủ trương, nghị quyết, kết luận của Ban Chấp hành Trung ương, Tỉnh ủy và Đảng ủy xã đến 100% cán bộ, đảng viên. Tình hình tư tưởng của cán bộ, giáo viên và nhân viên trong đơn vị ổn định, an tâm công tác, tin tưởng tuyệt đối vào sự lãnh đạo của Đảng.</p>
+            <p>Đảng viên trong chi bộ luôn giữ gìn phẩm chất đạo đức lối sống, không có biểu hiện suy thoái về tư tưởng chính trị, đạo đức, lối sống, "tự diễn biến", "tự chuyển hóa" trong nội bộ.</p>
+
+            <p class="doc-heading-2">2. Lãnh đạo thực hiện nhiệm vụ chuyên môn</p>
+            <p>Chi bộ đã lãnh đạo Ban Giám hiệu nhà trường và các đoàn thể duy trì tốt nền nếp dạy và học; thực hiện nghiêm túc kế hoạch giáo dục năm học; duy trì tỷ lệ chuyên cần của học sinh trên 98%; tổ chức tốt công tác nuôi dưỡng, bán trú cho học sinh người đồng bào dân tộc thiểu số đảm bảo an toàn vệ sinh thực phẩm.</p>
+            <p>Đẩy mạnh phong trào thi đua "Đổi mới, sáng tạo trong quản lý, giảng dạy và học tập", tích cực ứng dụng công nghệ thông tin và chuyển đổi số trong công tác quản lý và giảng dạy.</p>
+
+            <p class="doc-heading-2">3. Công tác xây dựng tổ chức Đảng và đảng viên</p>
+            <p>Duy trì nghiêm túc nền nếp sinh hoạt chi bộ định kỳ theo Hướng dẫn số 12-HD/BTCTW. Tổng số đảng viên tham gia sinh hoạt: ${dangVienCoMat}. Tinh thần tự phê bình và phê bình được phát huy tốt, các ý kiến đóng góp mang tính xây dựng cao.</p>
+            <p>Công tác kiểm tra, giám sát nội bộ được thực hiện đúng kế hoạch. Thu nộp đảng phí đầy đủ, kịp thời theo quy định.</p>
+
+            <p class="doc-heading-1">II. PHƯƠNG HƯỚNG, NHIỆM VỤ TRỌNG TÂM THÁNG ${(parseInt(thang)%12)+1} NĂM ${nam}</p>
+            <p class="doc-heading-2">1. Về công tác xây dựng Đảng</p>
+            <p>- Tiếp tục đẩy mạnh việc học tập và làm theo tư tưởng, đạo đức, phong cách Hồ Chí Minh; thực hiện nghiêm túc Nghị quyết Trung ương 4 (khóa XI, XII, XIII).</p>
+            <p>- Thực hiện tốt công tác bồi dưỡng, giúp đỡ quần chúng ưu tú để xem xét kết nạp vào Đảng.</p>
+            
+            <p class="doc-heading-2">2. Về lãnh đạo nhiệm vụ chính trị</p>
+            <p>- Tập trung nâng cao chất lượng giáo dục toàn diện, chuẩn bị tốt các điều kiện cho công tác kiểm tra định kỳ.</p>
+            <p>- Đảm bảo an ninh trật tự, an toàn trường học và phòng chống dịch bệnh.</p>
+          `;
+          break;
+
+        case 'nq_thuongky':
+          bodyContentHtml = `
+            <p class="doc-main-title">NGHỊ QUYẾT</p>
+            <p class="doc-sub-title">Hội nghị sinh hoạt Chi bộ kỳ tháng ${thang} năm ${nam}</p>
+
+            ${basisHtml}
+            <p>Hôm nay, vào hồi ${thoiGianDiaDiem}, Chi bộ ${tenChiBo} tiến hành kỳ họp sinh hoạt thường kỳ tháng ${thang} năm ${nam}.</p>
+            <p>Tổng số đảng viên của Chi bộ: ${membersList.length} đồng chí. Có mặt dự họp: ${dangVienCoMat}. Chủ trì: Đồng chí ${biThu} - Bí thư Chi bộ; Thư ký: Đồng chí ${thuKy}.</p>
+            <p>Sau khi nghe báo cáo đánh giá tình hình thực hiện nhiệm vụ tháng ${thang} và thảo luận thống nhất các nhiệm vụ trọng tâm tháng ${(parseInt(thang)%12)+1}, Chi bộ quyết nghị:</p>
+
+            <p class="doc-heading-1">QUYẾT NGHỊ:</p>
+            <p><b>Điều 1.</b> Thống nhất thông qua Báo cáo đánh giá công tác tháng ${thang} và phương hướng nhiệm vụ tháng ${(parseInt(thang)%12)+1} năm ${nam} của Chi bộ.</p>
+            <p><b>Điều 2. Các chỉ tiêu và nhiệm vụ trọng tâm quyết tâm thực hiện trong tháng tới:</b></p>
+            <p>1. 100% cán bộ, đảng viên thực hiện tốt chủ trương của Đảng, chính sách pháp luật của Nhà nước và quy chế cơ quan.</p>
+            <p>2. Lãnh đạo thực hiện tốt nhiệm vụ chuyên môn; duy trì sĩ số học sinh đạt 100%; nâng cao chất lượng nuôi dưỡng học sinh bán trú.</p>
+            <p>3. Phân công đồng chí ${phoBiThu} và đồng chí ${chiUyVien} tiếp tục theo dõi, bồi dưỡng 02 quần chúng ưu tú tạo nguồn phát triển Đảng.</p>
+            <p>4. Tăng cường công tác kiểm tra, giám sát đảng viên trong việc thực hiện cam kết rèn luyện, tu dưỡng năm ${nam}.</p>
+            <p><b>Điều 3. Tổ chức thực hiện:</b></p>
+            <p>Nghị quyết này đã được 100% đảng viên chính thức có mặt biểu quyết nhất trí thông qua. Ban Chi ủy, các tổ đảng và toàn thể đảng viên trong Chi bộ chịu trách nhiệm quán triệt và tổ chức thực hiện nghiêm túc Nghị quyết này.</p>
+          `;
+          break;
+
+        case 'bb_thuongky':
+          bodyContentHtml = `
+            <p class="doc-main-title">BIÊN BẢN</p>
+            <p class="doc-sub-title">Hội nghị sinh hoạt Chi bộ thường kỳ tháng ${thang} năm ${nam}</p>
+
+            <p class="no-indent"><b>1. Thời gian, địa điểm:</b></p>
+            <p>- Thời gian: Vào hồi ${thoiGianDiaDiem}.</p>
+            <p>- Địa điểm: ${tenChiBo}.</p>
+
+            <p class="no-indent"><b>2. Thành phần tham dự:</b></p>
+            <p>- Tổng số đảng viên của Chi bộ: ${membersList.length} đồng chí. Trong đó: Chính thức: ${membersList.filter(m=>m.status==='Chính thức').length} đ/c, Dự bị: ${membersList.filter(m=>m.status==='Dự bị').length} đ/c.</p>
+            <p>- Có mặt: ${dangVienCoMat}.</p>
+            <p>- Vắng mặt: 0 đồng chí.</p>
+            <p>- Đại biểu cấp ủy cấp trên tham dự: Đồng chí đại diện Đảng ủy cơ sở phụ trách chi bộ.</p>
+            <p>- Chủ trì cuộc họp: Đồng chí ${biThu} - Bí thư Chi bộ.</p>
+            <p>- Thư ký cuộc họp: Đồng chí ${thuKy} - Đảng viên.</p>
+
+            <p class="doc-heading-1">NỘI DUNG VÀ DIỄN BIẾN HỘI NGHỊ:</p>
+            
+            <p class="doc-heading-2">1. Phần mở đầu</p>
+            <p>- Đồng chí Bí thư Chi bộ thông báo tình hình đảng viên, thông qua chương trình và nội dung làm việc của hội nghị.</p>
+            <p>- Toàn thể đảng viên nhất trí với chương trình sinh hoạt do Chi ủy đề xuất.</p>
+
+            <p class="doc-heading-2">2. Thông tin thời sự và quán triệt văn bản mới</p>
+            <p>- Đồng chí Bí thư Chi bộ phổ biến bản tin sinh hoạt nội bộ của Ban Tuyên giáo; quán triệt các văn bản chỉ đạo mới của Đảng ủy cấp trên.</p>
+
+            <p class="doc-heading-2">3. Đánh giá tình hình thực hiện nhiệm vụ công tác tháng ${thang}</p>
+            <p>- Đồng chí ${phoBiThu} trình bày dự thảo báo cáo đánh giá kết quả công tác tháng ${thang} và phương hướng nhiệm vụ trọng tâm tháng tiếp theo.</p>
+
+            <p class="doc-heading-2">4. Thảo luận của đảng viên</p>
+            <p>Hội nghị có 05 lượt ý kiến phát biểu thảo luận sôi nổi và trách nhiệm:</p>
+            <p>- Đồng chí ${chiUyVien} (Chi ủy viên, Chủ tịch CĐ): Nhất trí với dự thảo báo cáo, đề xuất đẩy mạnh công tác chăm lo đời sống đoàn viên và quản lý học sinh bán trú ngoài giờ học.</p>
+            <p>- Đồng chí Lô Thị Lựu (Đảng viên): Đề xuất tăng cường ứng dụng chuyển đổi số và bồi dưỡng tiếng Anh cho học sinh đồng bào dân tộc thiểu số.</p>
+            <p>- Đồng chí Nông Thị Bời (Đảng viên): Nhất trí cao với các chỉ tiêu chuyên môn và công tác ôn thi học sinh giỏi của nhà trường.</p>
+            <p>- Đồng chí Mạc Văn Thông (Đảng viên): Phát biểu về công tác giáo dục chính trị tư tưởng và xây dựng khối đoàn kết nội bộ trong nhà trường.</p>
+
+            <p class="doc-heading-2">5. Kết luận của chủ trì hội nghị và biểu quyết</p>
+            <p>Đồng chí Bí thư Chi bộ ${biThu} tổng hợp và giải trình thỏa đáng các ý kiến; kết luận toàn diện các nhiệm vụ trọng tâm chi bộ cần tập trung lãnh đạo thực hiện trong tháng tới.</p>
+            <p>Chi bộ tiến hành biểu quyết thông qua Nghị quyết: 100% đảng viên có mặt biểu quyết tán thành (${membersList.length}/${membersList.length} đồng chí).</p>
+            <p>Cuộc họp kết thúc vào hồi 16 giờ 30 phút cùng ngày. Biên bản đã được đọc lại cho toàn thể hội nghị nghe và nhất trí thông qua.</p>
+          `;
+          break;
+
+        case 'kd_dangvien':
+          bodyContentHtml = `
+            <p class="doc-main-title">BẢN TỰ KIỂM ĐIỂM ĐẢNG VIÊN NĂM ${nam}</p>
+            <p class="doc-sub-title">(Theo Hướng dẫn số 02-HD/BTCTW của Ban Tổ chức Trung ương)</p>
+
+            <p class="no-indent">Họ và tên: <b>${biThu}</b>. Ngày sinh: 22/8/1979.</p>
+            <p class="no-indent">Chức vụ Đảng: Bí thư Chi bộ. Chức vụ chính quyền/chuyên môn: Hiệu trưởng.</p>
+            <p class="no-indent">Đơn vị sinh hoạt: ${tenChiBo}.</p>
+
+            <p class="doc-heading-1">I. ƯU ĐIỂM, KẾT QUẢ ĐẠT ĐƯỢC</p>
+            <p class="doc-heading-2">1. Về tư tưởng chính trị, đạo đức, lối sống, ý thức tổ chức kỷ luật:</p>
+            <p>- Luôn kiên định chủ nghĩa Mác - Lênin, tư tưởng Hồ Chí Minh và đường lối đổi mới của Đảng; chấp hành nghiêm Cương lĩnh, Điều lệ Đảng, các nghị quyết, chỉ thị của Đảng.</p>
+            <p>- Giữ gìn phẩm chất đạo đức trong sáng, lối sống giản dị, gương mẫu, trung thực; thực hiện nghiêm quy định về những điều đảng viên không được làm.</p>
+            <p>- Luôn nêu cao tinh thần trách nhiệm, thực hiện tốt quy chế dân chủ ở cơ sở, giữ gìn đoàn kết nội bộ.</p>
+
+            <p class="doc-heading-2">2. Về thực hiện chức trách, nhiệm vụ được giao:</p>
+            <p>- Lãnh đạo Chi bộ hoàn thành xuất sắc các chỉ tiêu công tác năm; tổ chức sinh hoạt chi bộ đúng kỳ, chất lượng ngày càng nâng cao.</p>
+            <p>- Cùng Ban Giám hiệu điều hành tốt công tác giáo dục, quản lý cơ sở vật chất và tài chính minh bạch, đúng quy định.</p>
+
+            <p class="doc-heading-1">II. HẠN CHẾ, KHUYẾT ĐIỂM VÀ NGUYÊN NHÂN</p>
+            <p>- Trong công tác kiểm tra, đôn đốc đôi lúc chưa được thường xuyên do công việc quản lý chuyên môn nhiều.</p>
+            <p>- Nguyên nhân: Do kiêm nhiệm nhiều nhiệm vụ quản lý.</p>
+
+            <p class="doc-heading-1">III. PHƯƠNG HƯỚNG, BIỆN PHÁP KHẮC PHỤC</p>
+            <p>- Sắp xếp thời gian khoa học, tăng cường đi sâu sát cơ sở và tăng cường kiểm tra giám sát đảng viên.</p>
+
+            <p class="doc-heading-1">IV. TỰ NHẬN MỨC XẾP LOẠI CHẤT LƯỢNG</p>
+            <p>Tự nhận mức xếp loại: <b>Hoàn thành xuất sắc nhiệm vụ</b>.</p>
+          `;
+          break;
+
+        case 'bc_thongke':
+          // Báo cáo thống kê số liệu tự động
+          const total = membersList.length;
+          const official = membersList.filter(m=>m.status==='Chính thức').length;
+          const prob = membersList.filter(m=>m.status==='Dự bị').length;
+          const female = membersList.filter(m=>m.gender==='Nữ').length;
+          const ethnic = membersList.filter(m=>m.ethnic!=='Kinh').length;
+          const master = membersList.filter(m=>m.education==='Thạc sĩ'||m.education==='Tiến sĩ').length;
+          const univ = membersList.filter(m=>m.education==='Đại học').length;
+          const col = membersList.filter(m=>m.education==='Cao đẳng').length;
+          const mid = membersList.filter(m=>m.education==='Trung cấp').length;
+          const llctHigh = membersList.filter(m=>m.llct==='Cao cấp').length;
+          const llctMid = membersList.filter(m=>m.llct==='Trung cấp').length;
+          const llctLow = membersList.filter(m=>m.llct==='Sơ cấp').length;
+
+          bodyContentHtml = `
+            <p class="doc-main-title">BÁO CÁO</p>
+            <p class="doc-sub-title">Thống kê số liệu, cơ cấu đội ngũ Đảng viên và chất lượng tổ chức cơ sở Đảng</p>
+
+            ${basisHtml}
+            <p>Chi bộ ${tenChiBo} báo cáo tổng hợp các tiêu chí thống kê đội ngũ đảng viên và công tác tổ chức Đảng tính đến ngày ${ngay} tháng ${thang} năm ${nam} như sau:</p>
+
+            <p class="doc-heading-1">I. THỐNG KÊ SỐ LƯỢNG VÀ CƠ CẤU ĐẢNG VIÊN</p>
+            <p>1. Tổng số đảng viên trong chi bộ: <b>${total} đồng chí</b>. Trong đó:</p>
+            <p>- Đảng viên chính thức: ${official} đồng chí (tỉ lệ ${Math.round(official/total*100)}%).</p>
+            <p>- Đảng viên dự bị: ${prob} đồng chí (tỉ lệ ${Math.round(prob/total*100)}%).</p>
+            <p>- Đảng viên nữ: ${female} đồng chí (tỉ lệ ${Math.round(female/total*100)}%).</p>
+            <p>- Đảng viên là người dân tộc thiểu số: ${ethnic} đồng chí (tỉ lệ ${Math.round(ethnic/total*100)}%).</p>
+
+            <p class="doc-heading-1">II. THỐNG KÊ VỀ TRÌNH ĐỘ HỌC VẤN VÀ CHUYÊN MÔN</p>
+            <table class="doc-content-table">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Trình độ chuyên môn</th>
+                  <th>Số lượng (đ/c)</th>
+                  <th>Tỷ lệ (%)</th>
+                  <th>Ghi chú</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:center;">1</td>
+                  <td>Thạc sĩ, Sau đại học</td>
+                  <td style="text-align:center;font-weight:bold;">${master}</td>
+                  <td style="text-align:center;">${Math.round(master/total*100)}%</td>
+                  <td>Cán bộ quản lý</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;">2</td>
+                  <td>Đại học</td>
+                  <td style="text-align:center;font-weight:bold;">${univ}</td>
+                  <td style="text-align:center;">${Math.round(univ/total*100)}%</td>
+                  <td>Giáo viên cốt cán</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;">3</td>
+                  <td>Cao đẳng</td>
+                  <td style="text-align:center;font-weight:bold;">${col}</td>
+                  <td style="text-align:center;">${Math.round(col/total*100)}%</td>
+                  <td>Đang học liên thông</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;">4</td>
+                  <td>Trung cấp</td>
+                  <td style="text-align:center;font-weight:bold;">${mid}</td>
+                  <td style="text-align:center;">${Math.round(mid/total*100)}%</td>
+                  <td>Đảng viên cao tuổi</td>
+                </tr>
+                <tr style="background:#f8fafc;font-weight:bold;">
+                  <td colspan="2" style="text-align:center;">TỔNG CỘNG</td>
+                  <td style="text-align:center;">${total}</td>
+                  <td style="text-align:center;">100%</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="doc-heading-1">III. THỐNG KÊ TRÌNH ĐỘ LÝ LUẬN CHÍNH TRỊ</p>
+            <p>- Cao cấp / Cử nhân: ${llctHigh} đồng chí (${Math.round(llctHigh/total*100)}%).</p>
+            <p>- Trung cấp lý luận chính trị: ${llctMid} đồng chí (${Math.round(llctMid/total*100)}%).</p>
+            <p>- Sơ cấp lý luận chính trị: ${llctLow} đồng chí (${Math.round(llctLow/total*100)}%).</p>
+            <p>- Chưa qua đào tạo lý luận: ${total - (llctHigh+llctMid+llctLow)} đồng chí (đảng viên trẻ mới kết nạp).</p>
+
+            <p class="doc-heading-1">IV. ĐÁNH GIÁ CHUNG VÀ ĐỀ XUẤT</p>
+            <p>Đội ngũ đảng viên trong chi bộ có cơ cấu trẻ hóa, tỷ lệ đạt chuẩn đào tạo đại học và lý luận chính trị cao, đáp ứng tốt yêu cầu đổi mới căn bản, toàn diện giáo dục đào tạo.</p>
+          `;
+          break;
+
+        default:
+          bodyContentHtml = `
+            <p class="doc-main-title">${tmpl.name.toUpperCase()}</p>
+            <p class="doc-sub-title">Nhiệm kỳ 2025 - 2030</p>
+            ${basisHtml}
+            <p class="doc-heading-1">I. MỤC ĐÍCH, YÊU CẦU</p>
+            <p>Quán triệt sâu sắc các chủ trương, nghị quyết của Đảng, nâng cao năng lực lãnh đạo và sức chiến đấu của tổ chức cơ sở Đảng.</p>
+            <p class="doc-heading-1">II. NỘI DUNG VÀ NHIỆM VỤ THỰC HIỆN</p>
+            <p>1. Thực hiện nghiêm túc quy định của Điều lệ Đảng và quy chế làm việc của Chi bộ.</p>
+            <p>2. Phân công nhiệm vụ cụ thể cho từng đồng chí Chi ủy viên và đảng viên phụ trách các tổ chức đoàn thể.</p>
+            <p class="doc-heading-1">III. TỔ CHỨC THỰC HIỆN</p>
+            <p>Toàn thể đảng viên trong chi bộ chịu trách nhiệm thi hành nghiêm túc văn bản này.</p>
+          `;
+          break;
+      }
+
+      // Xây dựng hoàn chỉnh trang A4 với Header và Footer đúng thể thức Đảng
+      let signerTitle = 'T/M BAN CHI ỦY';
+      let signerRole = 'BÍ THƯ';
+      let signerName = biThu;
+
+      if (tmpl.key === 'bb_thuongky' || tmpl.key === 'bb_chiuy' || tmpl.key === 'bb_kiemdiem') {
+        signerTitle = '';
+        signerRole = '';
+      } else if (tmpl.key === 'kd_dangvien' || tmpl.key === 'phieu_gopy') {
+        signerTitle = 'NGƯỜI TỰ KIỂM ĐIỂM';
+        signerRole = '(Ký và ghi rõ họ tên)';
+        signerName = biThu;
+      } else if (currentRole === 'thuky') {
+        signerTitle = 'T/M CHI BỘ';
+        signerRole = 'THƯ KÝ';
+        signerName = thuKy;
+      }
+
+      let footerHtml = '';
+      if (tmpl.key === 'bb_thuongky' || tmpl.key === 'bb_chiuy' || tmpl.key === 'bb_kiemdiem') {
+        footerHtml = `
+          <table class="doc-footer-table">
+            <tr>
+              <td style="width: 50%; text-align: center;">
+                <b>THƯ KÝ HỘI NGHỊ</b><br/>
+                <i>(Ký và ghi rõ họ tên)</i><br/><br/><br/><br/>
+                <b>${thuKy}</b>
+              </td>
+              <td style="width: 50%; text-align: center;">
+                <b>CHỦ TRÌ HỘI NGHỊ</b><br/>
+                <i>(Ký và ghi rõ họ tên)</i><br/><br/><br/><br/>
+                <b>${biThu}</b>
+              </td>
+            </tr>
+          </table>
+        `;
+      } else if (tmpl.key === 'kd_dangvien' || tmpl.key === 'phieu_gopy') {
+        footerHtml = `
+          <table class="doc-footer-table">
+            <tr>
+              <td style="width: 50%; text-align: left;">
+                <b>Ý KIẾN CỦA CHI ỦY / CHI BỘ:</b><br/>
+                ............................................................<br/>
+                ............................................................<br/>
+                <b>T/M CHI BỘ</b><br/>
+                <b>BÍ THƯ</b><br/><br/><br/><br/>
+                <b>${biThu}</b>
+              </td>
+              <td style="width: 50%; text-align: center;">
+                <i>${diaDanh}, ngày ${ngay} tháng ${thang} năm ${nam}</i><br/>
+                <b>${signerTitle}</b><br/>
+                <i>${signerRole}</i><br/><br/><br/><br/>
+                <b>${signerName}</b>
+              </td>
+            </tr>
+          </table>
+        `;
+      } else {
+        footerHtml = `
+          <table class="doc-footer-table">
+            <tr>
+              <td style="width: 45%; text-align: left; vertical-align: top;">
+                <p class="no-indent" style="font-size: 11pt; line-height: 1.3; margin: 0;">
+                  <u><b>Nơi nhận:</b></u><br/>
+                  - Đảng ủy cấp trên (để b/c);<br/>
+                  - Các đồng chí Chi ủy viên;<br/>
+                  - Toàn thể đảng viên Chi bộ;<br/>
+                  - Lưu: Văn thư Chi bộ.
+                </p>
+              </td>
+              <td style="width: 55%; text-align: center; vertical-align: top;">
+                <p class="no-indent" style="margin: 0; line-height: 1.35;">
+                  <b>${signerTitle}</b><br/>
+                  <b>${signerRole}</b><br/><br/><br/><br/>
+                  <b>${signerName}</b>
+                </p>
+              </td>
+            </tr>
+          </table>
+        `;
+      }
+
+      const fullDocumentHtml = `
+        <!-- HEADER VĂN BẢN ĐẢNG CHUẨN THỂ THỨC -->
+        <table class="doc-header-table">
+          <tr>
+            <td style="width: 50%; text-align: center; vertical-align: top;">
+              <span style="font-size: 12.5pt; text-transform: uppercase;">${capTren}</span><br/>
+              <span style="font-size: 12.5pt; font-weight: bold; text-transform: uppercase; text-decoration: underline;">${tenChiBo}</span><br/>
+              <span style="font-size: 12.5pt;">${kyHieuFull}</span>
+            </td>
+            <td style="width: 50%; text-align: center; vertical-align: top;">
+              <span style="font-size: 13.5pt; font-weight: bold; text-transform: uppercase;">ĐẢNG CỘNG SẢN VIỆT NAM</span><br/>
+              <span style="font-size: 13pt; font-style: italic;">${diaDanh}, ngày ${ngay} tháng ${thang} năm ${nam}</span>
+            </td>
+          </tr>
+        </table>
+
+        <!-- PHẦN THÂN VĂN BẢN -->
+        <div class="doc-body-wrapper" style="margin-top: 8pt; margin-bottom: 14pt;">
+          ${bodyContentHtml}
+        </div>
+
+        <!-- PHẦN KÝ DUYỆT VÀ NƠI NHẬN -->
+        ${footerHtml}
+      `;
+
+      page.innerHTML = fullDocumentHtml;
+    }
+
+    // ================= SOẠN THẢO VĂN BẢN TRỰC TIẾP (WYSIWYG) =================
+    function execFormat(command, value = null) {
+      document.execCommand(command, false, value);
+    }
+
+    function quickInsertBasis(text) {
+      const area = document.getElementById('customBasisInput');
+      if (!area.value.includes(text)) {
+        area.value = area.value.trim() + '\n' + text;
+        renderActiveDoc();
+        showToast('Đã thêm căn cứ vào văn bản!');
+      }
+    }
+
+    function copyDocumentText() {
+      const page = document.getElementById('printableArea');
+      if (!page) return;
+      
+      const range = document.createRange();
+      range.selectNode(page);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      
+      try {
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        showToast('✓ Đã sao chép toàn bộ văn bản vào bộ nhớ tạm!');
+      } catch (err) {
+        showToast('Lỗi khi sao chép: ' + err, 'error');
+      }
+    }
+
+    // Xuất Microsoft Word .doc chuẩn thể thức Đảng
+    function exportToWordDoc() {
+      const page = document.getElementById('printableArea');
+      if (!page) return;
+
+      const title = document.getElementById('currentDocTitleBadge').innerText || 'Van_Ban_Dang';
+      const fileName = `${title.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.doc`;
+
+      const header = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+              xmlns:w='urn:schemas-microsoft-com:office:word' 
+              xmlns='http://www.w3.org/TR/REC-html40'>
+        <head>
+          <meta charset='utf-8'>
+          <title>${title}</title>
+          <style>
+            @page {
+              size: 21.0cm 29.7cm;
+              margin: 2.2cm 1.8cm 2.2cm 3.0cm;
+              mso-page-orientation: portrait;
+            }
+            body {
+              font-family: 'Times New Roman', serif;
+              font-size: 14pt;
+              line-height: 1.4;
+              color: #000;
+            }
+            p {
+              margin: 0 0 6pt 0;
+              text-align: justify;
+              text-indent: 1.27cm;
+            }
+            p.no-indent { text-indent: 0 !important; }
+            p.doc-main-title {
+              text-align: center;
+              font-weight: bold;
+              font-size: 15pt;
+              text-transform: uppercase;
+              margin-top: 14pt;
+              margin-bottom: 4pt;
+              text-indent: 0;
+            }
+            p.doc-sub-title {
+              text-align: center;
+              font-weight: bold;
+              font-size: 13.5pt;
+              margin-bottom: 10pt;
+              text-indent: 0;
+            }
+            p.doc-heading-1 {
+              font-weight: bold;
+              font-size: 14pt;
+              margin-top: 10pt;
+              margin-bottom: 4pt;
+              text-indent: 0;
+            }
+            p.doc-heading-2 {
+              font-weight: bold;
+              font-size: 14pt;
+              margin-top: 6pt;
+              margin-bottom: 4pt;
+              text-indent: 1.27cm;
+            }
+            p.doc-basis-item {
+              font-style: italic;
+              margin-bottom: 4pt;
+              text-indent: 1.27cm;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            td {
+              font-family: 'Times New Roman', serif;
+              font-size: 13pt;
+              vertical-align: top;
+            }
+            table.doc-content-table td, table.doc-content-table th {
+              border: 1px solid black;
+              padding: 5pt;
+              font-size: 12pt;
+            }
+          </style>
+        </head>
+        <body>
+      `;
+      const footer = `</body></html>`;
+      const sourceHTML = header + page.innerHTML + footer;
+
+      const blob = new Blob(['\ufeff' + sourceHTML], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('✓ Đã tải file Word chuẩn thể thức: ' + fileName);
+    }
+
+    // ================= QUẢN LÝ DANH SÁCH ĐẢNG VIÊN =================
+    function loadMembersFromStorage() {
+      const saved = localStorage.getItem('party_members_list');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          // Kiểm tra nếu là dữ liệu giả định cũ hoặc không đủ 29 đ/c từ file Excel
+          const hasRealMember = parsed.some(m => m.name === 'Nông Thị Duyên' || m.name === 'Hà Quốc Toản');
+          if (!hasRealMember || parsed.length < 25) {
+            membersList = JSON.parse(JSON.stringify(defaultMembers));
+            saveMembersToStorage();
+          } else {
+            membersList = parsed;
+          }
+        } catch (e) {
+          membersList = JSON.parse(JSON.stringify(defaultMembers));
+          saveMembersToStorage();
+        }
+      } else {
+        membersList = JSON.parse(JSON.stringify(defaultMembers));
+        saveMembersToStorage();
+      }
+      updateMemberCountBadges();
+    }
+
+    function saveMembersToStorage() {
+      localStorage.setItem('party_members_list', JSON.stringify(membersList));
+      updateMemberCountBadges();
+      calculateAndRenderStats();
+    }
+
+    function resetDefaultMembers() {
+      if (confirm('Khôi phục danh sách 15 đồng chí Đảng viên mẫu ban đầu?')) {
+        membersList = JSON.parse(JSON.stringify(defaultMembers));
+        saveMembersToStorage();
+        renderMembersTable();
+        showToast('Đã khôi phục dữ liệu danh sách Đảng viên mẫu!');
+      }
+    }
+
+    function updateMemberCountBadges() {
+      const count = membersList.length;
+      const b1 = document.getElementById('memberCountBadge');
+      const b2 = document.getElementById('totalMembersCount');
+      if (b1) b1.innerText = count;
+      if (b2) b2.innerText = count;
+    }
+
+    function renderMembersTable(data = null) {
+      const tbody = document.getElementById('membersTableBody');
+      if (!tbody) return;
+
+      const list = data || membersList;
+      document.getElementById('showingMembersCount').innerText = list.length;
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="13" class="px-4 py-8 text-center text-slate-400 italic">Không tìm thấy đồng chí nào phù hợp bộ lọc.</td></tr>`;
+        return;
+      }
+
+      let html = '';
+      list.forEach((m, idx) => {
+        let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Chính thức</span>`;
+        if (m.status === 'Dự bị') {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">Dự bị</span>`;
+        } else if (m.status === 'Miễn SH') {
+          statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-700">Miễn SH</span>`;
+        }
+
+        let rankBadge = `<span class="text-slate-600">${m.ranking || 'Chưa đánh giá'}</span>`;
+        if (m.ranking && m.ranking.includes('xuất sắc')) {
+          rankBadge = `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-900 border border-purple-200">★ Xuất sắc</span>`;
+        } else if (m.ranking && m.ranking.includes('tốt')) {
+          rankBadge = `<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">✓ Tốt</span>`;
+        }
+
+        const birthDisplay = m.birthDate || m.birthYear || '-';
+        const cmDetail = m.chuyenmon ? `${m.chuyenmon} (${m.education})` : m.education;
+        const noteDisplay = m.note ? `<span class="inline-block text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded border border-slate-200" title="${m.note}">${m.note}</span>` : '<span class="text-slate-300">-</span>';
+        const cardDisplay = m.cardNo ? `<div class="text-[10px] text-red-700 font-mono font-semibold">Số thẻ: ${m.cardNo}</div>` : '';
+
+        html += `
+          <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+            <td class="px-2 py-2.5 text-center font-bold text-slate-500">${m.stt || (idx + 1)}</td>
+            <td class="px-3 py-2.5">
+              <div class="font-bold text-slate-900">${m.name}</div>
+              ${cardDisplay}
+            </td>
+            <td class="px-2 py-2.5 text-center whitespace-nowrap text-slate-600">${birthDisplay}</td>
+            <td class="px-2 py-2.5 text-center">${m.gender}</td>
+            <td class="px-2 py-2.5 text-center"><span class="px-1.5 py-0.5 rounded text-[10px] font-semibold ${m.ethnic==='Tày'?'bg-blue-50 text-blue-800':m.ethnic==='Nùng'?'bg-amber-50 text-amber-800':m.ethnic==='Dao'?'bg-emerald-50 text-emerald-800':'bg-slate-100 text-slate-700'}">${m.ethnic}</span></td>
+            <td class="px-3 py-2.5 text-slate-600 text-[11px] max-w-[150px] truncate" title="${m.hometown||''}">${m.hometown || '-'}</td>
+            <td class="px-3 py-2.5">
+              <div class="font-semibold text-red-800">${m.partyRole}</div>
+              <div class="text-[11px] text-slate-500">${m.govRole}</div>
+            </td>
+            <td class="px-2.5 py-2.5 text-center whitespace-nowrap text-slate-700 font-medium">${m.joinDate || '-'}</td>
+            <td class="px-2.5 py-2.5 text-center whitespace-nowrap text-slate-700 font-medium">${m.officialDate || (m.status==='Dự bị' ? '<span class="text-amber-600 italic">Chưa KN</span>' : '-')}</td>
+            <td class="px-3 py-2.5"><span class="font-medium text-slate-800">${cmDetail}</span></td>
+            <td class="px-2.5 py-2.5"><span class="font-semibold ${m.llct==='Trung cấp'?'text-red-700':m.llct==='Sơ cấp'?'text-blue-700':'text-slate-400'}">${m.llct}</span></td>
+            <td class="px-2 py-2.5 text-center font-medium text-slate-600">${m.ngoaingu || '-'}</td>
+            <td class="px-2.5 py-2.5 text-center">${statusBadge}</td>
+            <td class="px-3 py-2.5 text-[11px] text-slate-600 max-w-[160px]">${noteDisplay}</td>
+            <td class="px-2 py-2.5 text-center">
+              <div class="flex items-center justify-center gap-1">
+                <button onclick="editMember('${m.id}')" title="Sửa thông tin" class="text-blue-600 hover:text-blue-800 p-1">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button onclick="deleteMember('${m.id}')" title="Xóa" class="text-red-500 hover:text-red-700 p-1">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    function filterMembersList() {
+      const q = (document.getElementById('searchMemberInput').value || '').toLowerCase().trim();
+      const status = document.getElementById('filterStatus').value;
+      const gender = document.getElementById('filterGender').value;
+      const llct = document.getElementById('filterLLCT').value;
+      const rank = document.getElementById('filterRank').value;
+
+      let filtered = membersList.filter(m => {
+        let matchQ = true;
+        if (q) {
+          matchQ = (m.name.toLowerCase().includes(q) || (m.cardNo && m.cardNo.includes(q)) || m.partyRole.toLowerCase().includes(q) || m.govRole.toLowerCase().includes(q));
+        }
+        let matchStatus = (status === 'all' || m.status === status);
+        let matchGender = (gender === 'all' || m.gender === gender);
+        let matchLLCT = (llct === 'all' || m.llct === llct);
+        let matchRank = (rank === 'all' || m.ranking === rank);
+
+        return matchQ && matchStatus && matchGender && matchLLCT && matchRank;
+      });
+
+      renderMembersTable(filtered);
+    }
+
+    function clearMemberFilters() {
+      document.getElementById('searchMemberInput').value = '';
+      document.getElementById('filterStatus').value = 'all';
+      document.getElementById('filterGender').value = 'all';
+      document.getElementById('filterLLCT').value = 'all';
+      document.getElementById('filterRank').value = 'all';
+      renderMembersTable();
+    }
+
+    // Modal Thêm / Sửa
+    function openMemberModal(member = null) {
+      document.getElementById('memberForm').reset();
+      const modal = document.getElementById('memberModal');
+      const title = document.getElementById('modalMemberTitle');
+      
+      if (member) {
+        title.innerHTML = '<i class="fa-solid fa-user-pen text-amber-300"></i> Cập Nhật Đảng Viên';
+        document.getElementById('m_id').value = member.id;
+        document.getElementById('m_name').value = member.name;
+        document.getElementById('m_birthYear').value = member.birthYear;
+        document.getElementById('m_gender').value = member.gender;
+        document.getElementById('m_ethnic').value = member.ethnic;
+        document.getElementById('m_religion').value = member.religion || 'Không';
+        document.getElementById('m_partyRole').value = member.partyRole;
+        document.getElementById('m_govRole').value = member.govRole;
+        document.getElementById('m_cardNo').value = member.cardNo || '';
+        document.getElementById('m_joinDate').value = member.joinDate || '';
+        document.getElementById('m_officialDate').value = member.officialDate || '';
+        document.getElementById('m_education').value = member.education;
+        document.getElementById('m_llct').value = member.llct;
+        document.getElementById('m_status').value = member.status;
+        document.getElementById('m_ranking').value = member.ranking;
+      } else {
+        title.innerHTML = '<i class="fa-solid fa-user-plus text-amber-300"></i> Thêm Đảng Viên Mới';
+        document.getElementById('m_id').value = '';
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeMemberModal() {
+      document.getElementById('memberModal').classList.add('hidden');
+    }
+
+    function editMember(id) {
+      const m = membersList.find(x => x.id === id);
+      if (m) openMemberModal(m);
+    }
+
+    function deleteMember(id) {
+      const m = membersList.find(x => x.id === id);
+      if (m && confirm(`Đồng chí có chắc chắn muốn xóa hồ sơ Đảng viên "${m.name}" khỏi danh sách?`)) {
+        membersList = membersList.filter(x => x.id !== id);
+        saveMembersToStorage();
+        renderMembersTable();
+        showToast('✓ Đã xóa đảng viên ' + m.name);
+      }
+    }
+
+    function saveMember(e) {
+      e.preventDefault();
+      const id = document.getElementById('m_id').value;
+      const name = document.getElementById('m_name').value.trim();
+      const birthYear = parseInt(document.getElementById('m_birthYear').value) || 1990;
+      const gender = document.getElementById('m_gender').value;
+      const ethnic = document.getElementById('m_ethnic').value.trim();
+      const religion = document.getElementById('m_religion').value.trim();
+      const partyRole = document.getElementById('m_partyRole').value;
+      const govRole = document.getElementById('m_govRole').value.trim();
+      const cardNo = document.getElementById('m_cardNo').value.trim();
+      const joinDate = document.getElementById('m_joinDate').value.trim();
+      const officialDate = document.getElementById('m_officialDate').value.trim();
+      const education = document.getElementById('m_education').value;
+      const llct = document.getElementById('m_llct').value;
+      const status = document.getElementById('m_status').value;
+      const ranking = document.getElementById('m_ranking').value;
+
+      if (!name) return;
+
+      if (id) {
+        // Cập nhật
+        const idx = membersList.findIndex(x => x.id === id);
+        if (idx !== -1) {
+          membersList[idx] = { id, name, birthYear, gender, ethnic, religion, partyRole, govRole, cardNo, joinDate, officialDate, education, llct, status, ranking };
+          showToast('✓ Đã cập nhật thông tin đồng chí ' + name);
+        }
+      } else {
+        // Thêm mới
+        const newId = Date.now().toString();
+        membersList.unshift({ id: newId, name, birthYear, gender, ethnic, religion, partyRole, govRole, cardNo, joinDate, officialDate, education, llct, status, ranking });
+        showToast('✓ Đã thêm đồng chí ' + name + ' vào danh sách');
+      }
+
+      saveMembersToStorage();
+      renderMembersTable();
+      closeMemberModal();
+    }
+
+    // Xuất Excel CSV UTF-8
+    function exportMembersToCSV() {
+      if (membersList.length === 0) {
+        showToast('Danh sách đảng viên trống!', 'error');
+        return;
+      }
+
+      let csv = "STT,Họ và Tên,Số thẻ Đảng,Năm sinh,Giới tính,Dân tộc,Tôn giáo,Chức vụ Đảng,Chức vụ chuyên môn,Ngày vào Đảng,Ngày chính thức,Trình độ chuyên môn,Lý luận chính trị,Tình trạng,Xếp loại\n";
+
+      membersList.forEach((m, idx) => {
+        csv += `"${idx+1}","${m.name}","${m.cardNo||''}","${m.birthYear}","${m.gender}","${m.ethnic}","${m.religion}","${m.partyRole}","${m.govRole}","${m.joinDate}","${m.officialDate}","${m.education}","${m.llct}","${m.status}","${m.ranking}"\n`;
+      });
+
+      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Danh_Sach_Dang_Vien_${new Date().toISOString().slice(0,10)}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast('✓ Đã xuất file Excel danh sách đảng viên!');
+    }
+
+    // ================= TÍNH TOÁN & THỐNG KÊ TIÊU CHÍ CÔNG TÁC ĐẢNG =================
+    function calculateAndRenderStats() {
+      const total = membersList.length;
+      if (total === 0) return;
+
+      const official = membersList.filter(m => m.status === 'Chính thức').length;
+      const prob = membersList.filter(m => m.status === 'Dự bị').length;
+      const male = membersList.filter(m => m.gender === 'Nam').length;
+      const female = membersList.filter(m => m.gender === 'Nữ').length;
+      const ethnic = membersList.filter(m => m.ethnic !== 'Kinh').length;
+
+      const univPlus = membersList.filter(m => m.education === 'Đại học' || m.education === 'Thạc sĩ' || m.education === 'Tiến sĩ').length;
+      const llctMidPlus = membersList.filter(m => m.llct === 'Trung cấp' || m.llct === 'Cao cấp').length;
+      const goodRank = membersList.filter(m => m.ranking && (m.ranking.includes('xuất sắc') || m.ranking.includes('tốt'))).length;
+      const excellent = membersList.filter(m => m.ranking && m.ranking.includes('xuất sắc')).length;
+
+      // Cập nhật các thẻ KPI
+      document.getElementById('kpiTotalMembers').innerText = total;
+      document.getElementById('kpiOfficialMembers').innerText = official;
+      document.getElementById('kpiProbationMembers').innerText = prob;
+
+      document.getElementById('kpiFemaleRatio').innerText = Math.round(female / total * 100) + '%';
+      document.getElementById('kpiMaleCount').innerText = male;
+      document.getElementById('kpiFemaleCount').innerText = female;
+
+      document.getElementById('kpiEthnicCount').innerText = ethnic;
+      document.getElementById('kpiEthnicRatio').innerText = Math.round(ethnic / total * 100) + '%';
+
+      document.getElementById('kpiUniversityRatio').innerText = Math.round(univPlus / total * 100) + '%';
+      document.getElementById('kpiUniversityCount').innerText = univPlus;
+
+      document.getElementById('kpiLLCTMidRatio').innerText = Math.round(llctMidPlus / total * 100) + '%';
+      document.getElementById('kpiLLCTMidCount').innerText = llctMidPlus;
+
+      document.getElementById('kpiGoodRankRatio').innerText = Math.round(goodRank / total * 100) + '%';
+      document.getElementById('kpiExcellentCount').innerText = excellent;
+
+      // Render Biểu đồ 1: Chuyên môn
+      renderBarChart('chartEducationContainer', [
+        { label: 'Thạc sĩ / Sau ĐH', count: membersList.filter(m=>m.education==='Thạc sĩ'||m.education==='Tiến sĩ').length, color: 'bg-indigo-600' },
+        { label: 'Đại học', count: membersList.filter(m=>m.education==='Đại học').length, color: 'bg-blue-600' },
+        { label: 'Cao đẳng', count: membersList.filter(m=>m.education==='Cao đẳng').length, color: 'bg-cyan-600' },
+        { label: 'Trung cấp / THPT', count: membersList.filter(m=>m.education==='Trung cấp'||m.education==='THPT').length, color: 'bg-slate-500' }
+      ], total);
+
+      // Render Biểu đồ 2: Lý luận chính trị
+      renderBarChart('chartLLCTContainer', [
+        { label: 'Cao cấp / Cử nhân', count: membersList.filter(m=>m.llct==='Cao cấp').length, color: 'bg-red-700' },
+        { label: 'Trung cấp', count: membersList.filter(m=>m.llct==='Trung cấp').length, color: 'bg-amber-600' },
+        { label: 'Sơ cấp', count: membersList.filter(m=>m.llct==='Sơ cấp').length, color: 'bg-emerald-600' },
+        { label: 'Chưa qua đào tạo', count: membersList.filter(m=>m.llct==='Chưa qua đào tạo').length, color: 'bg-slate-400' }
+      ], total);
+
+      // Render Biểu đồ 3: Nhóm tuổi
+      const currentYear = new Date().getFullYear();
+      const under30 = membersList.filter(m => (currentYear - m.birthYear) < 30).length;
+      const age30to40 = membersList.filter(m => (currentYear - m.birthYear) >= 30 && (currentYear - m.birthYear) <= 40).length;
+      const age41to50 = membersList.filter(m => (currentYear - m.birthYear) >= 41 && (currentYear - m.birthYear) <= 50).length;
+      const over50 = membersList.filter(m => (currentYear - m.birthYear) > 50).length;
+
+      renderBarChart('chartAgeContainer', [
+        { label: 'Dưới 30 tuổi (Thế hệ trẻ)', count: under30, color: 'bg-emerald-600' },
+        { label: 'Từ 30 đến 40 tuổi (Cốt cán)', count: age30to40, color: 'bg-blue-600' },
+        { label: 'Từ 41 đến 50 tuổi', count: age41to50, color: 'bg-amber-600' },
+        { label: 'Trên 50 tuổi (Kinh nghiệm)', count: over50, color: 'bg-purple-600' }
+      ], total);
+
+      // Render Biểu đồ 4: Xếp loại
+      renderBarChart('chartRankContainer', [
+        { label: 'Hoàn thành xuất sắc NV', count: membersList.filter(m=>m.ranking&&m.ranking.includes('xuất sắc')).length, color: 'bg-purple-700' },
+        { label: 'Hoàn thành tốt NV', count: membersList.filter(m=>m.ranking&&m.ranking.includes('tốt')).length, color: 'bg-emerald-600' },
+        { label: 'Hoàn thành nhiệm vụ', count: membersList.filter(m=>m.ranking==='Hoàn thành nhiệm vụ').length, color: 'bg-blue-500' },
+        { label: 'Không hoàn thành / Khác', count: membersList.filter(m=>m.ranking&&m.ranking.includes('Không')).length, color: 'bg-red-500' }
+      ], total);
+    }
+
+    function renderBarChart(containerId, items, total) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      let html = '';
+      items.forEach(item => {
+        const pct = total > 0 ? Math.round((item.count / total) * 100) : 0;
+        html += `
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1">
+              <span class="font-semibold text-slate-700">${item.label}</span>
+              <span class="font-bold text-slate-900">${item.count} đ/c (${pct}%)</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+              <div class="${item.color} h-2.5 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // Tự động chuyển số liệu thống kê thành Văn bản Báo cáo A4
+    function generateStatsReportDoc() {
+      selectDocTemplate('bc_thongke');
+      switchTab('tab-editor');
+      showToast('✓ Đã nạp dữ liệu thống kê vào Báo cáo A4!');
+    }
+
+    // ================= KHO LƯU TRỮ VĂN BẢN (LOCAL STORAGE) =================
+    function saveCurrentDocToStorage() {
+      const page = document.getElementById('printableArea');
+      if (!page) return;
+
+      const title = document.getElementById('currentDocTitleBadge').innerText;
+      const soHieu = document.getElementById('cfg_soHieu').value;
+      const tmpl = templatesCatalog.find(t => t.key === currentTemplateKey);
+      const kyHieu = tmpl ? tmpl.code : '-BC/CB';
+
+      const savedDocs = JSON.parse(localStorage.getItem('party_saved_documents') || '[]');
+      const newDoc = {
+        id: Date.now().toString(),
+        title: title,
+        code: `Số: ${soHieu}${kyHieu}`,
+        templateKey: currentTemplateKey,
+        date: new Date().toLocaleString('vi-VN'),
+        htmlContent: page.innerHTML
+      };
+
+      savedDocs.unshift(newDoc);
+      localStorage.setItem('party_saved_documents', JSON.stringify(savedDocs));
+
+      renderSavedDocsList();
+      showToast('✓ Đã lưu văn bản vào Kho lưu trữ cá nhân!');
+    }
+
+    function renderSavedDocsList() {
+      const savedDocs = JSON.parse(localStorage.getItem('party_saved_documents') || '[]');
+      const topCount = document.getElementById('savedCountTop');
+      if (topCount) topCount.innerText = savedDocs.length;
+
+      const container = document.getElementById('savedDocumentsContainer');
+      if (!container) return;
+
+      if (savedDocs.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 bg-white rounded-xl border border-slate-200">
+            <i class="fa-regular fa-folder-open text-3xl mb-2"></i>
+            <p class="text-xs">Chưa có văn bản nào được lưu trong kho. Hãy nhấn "Lưu Bản Thảo" sau khi soạn thảo.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      savedDocs.forEach(doc => {
+        html += `
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 flex flex-col justify-between gap-3 hover:border-red-300 transition">
+            <div>
+              <div class="flex items-center justify-between text-xs mb-1">
+                <span class="font-bold text-red-800">${doc.code}</span>
+                <span class="text-slate-400 text-[11px]">${doc.date}</span>
+              </div>
+              <h4 class="text-xs font-bold text-slate-900 leading-snug line-clamp-2">${doc.title}</h4>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+              <button onclick="restoreSavedDoc('${doc.id}')" class="px-2.5 py-1 rounded bg-red-50 hover:bg-red-100 text-red-800 text-xs font-bold transition flex items-center gap-1">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở lại
+              </button>
+              <button onclick="deleteSavedDoc('${doc.id}')" class="text-xs text-slate-400 hover:text-red-600">
+                <i class="fa-solid fa-trash-can"></i> Xóa
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function restoreSavedDoc(id) {
+      const savedDocs = JSON.parse(localStorage.getItem('party_saved_documents') || '[]');
+      const doc = savedDocs.find(d => d.id === id);
+      if (doc) {
+        const page = document.getElementById('printableArea');
+        if (page) {
+          page.innerHTML = doc.htmlContent;
+          currentTemplateKey = doc.templateKey;
+          document.getElementById('currentDocTitleBadge').innerText = doc.title;
+          switchTab('tab-editor');
+          showToast('✓ Đã khôi phục văn bản: ' + doc.title);
+        }
+      }
+    }
+
+    function deleteSavedDoc(id) {
+      if (confirm('Xóa văn bản này khỏi kho lưu trữ?')) {
+        let savedDocs = JSON.parse(localStorage.getItem('party_saved_documents') || '[]');
+        savedDocs = savedDocs.filter(d => d.id !== id);
+        localStorage.setItem('party_saved_documents', JSON.stringify(savedDocs));
+        renderSavedDocsList();
+        showToast('Đã xóa văn bản');
+      }
+    }
+
+    function clearAllSavedDocs() {
+      if (confirm('Đồng chí có chắc chắn muốn xóa TOÀN BỘ kho văn bản đã lưu?')) {
+        localStorage.removeItem('party_saved_documents');
+        renderSavedDocsList();
+        showToast('Đã xóa toàn bộ kho văn bản');
+      }
+    }
+
+    // ================= SAO LƯU & KHÔI PHỤC TOÀN BỘ HỆ THỐNG =================
+    function exportDataBackup() {
+      const backup = {
+        version: '1.0',
+        exportedAt: new Date().toISOString(),
+        members: membersList,
+        savedDocuments: JSON.parse(localStorage.getItem('party_saved_documents') || '[]'),
+        configs: {
+          capTren: document.getElementById('cfg_capTren').value,
+          tenChiBo: document.getElementById('cfg_tenChiBo').value,
+          diaDanh: document.getElementById('cfg_diaDanh').value,
+          biThu: document.getElementById('cfg_biThu').value,
+          phoBiThu: document.getElementById('cfg_phoBiThu').value,
+          thuKy: document.getElementById('cfg_thuKy').value,
+          basis: document.getElementById('customBasisInput').value
+        }
+      };
+
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(backup, null, 2));
+      const a = document.createElement('a');
+      a.setAttribute('href', dataStr);
+      a.setAttribute('download', `SaoLuu_CongTacDang_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast('✓ Đã xuất file sao lưu hệ thống!');
+    }
+
+    function importDataBackup(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (data.members && Array.isArray(data.members)) {
+            membersList = data.members;
+            saveMembersToStorage();
+            renderMembersTable();
+          }
+          if (data.savedDocuments && Array.isArray(data.savedDocuments)) {
+            localStorage.setItem('party_saved_documents', JSON.stringify(data.savedDocuments));
+            renderSavedDocsList();
+          }
+          if (data.configs) {
+            if (data.configs.capTren) document.getElementById('cfg_capTren').value = data.configs.capTren;
+            if (data.configs.tenChiBo) document.getElementById('cfg_tenChiBo').value = data.configs.tenChiBo;
+            if (data.configs.diaDanh) document.getElementById('cfg_diaDanh').value = data.configs.diaDanh;
+            if (data.configs.biThu) document.getElementById('cfg_biThu').value = data.configs.biThu;
+            if (data.configs.phoBiThu) document.getElementById('cfg_phoBiThu').value = data.configs.phoBiThu;
+            if (data.configs.thuKy) document.getElementById('cfg_thuKy').value = data.configs.thuKy;
+            if (data.configs.basis) document.getElementById('customBasisInput').value = data.configs.basis;
+            renderActiveDoc();
+          }
+          showToast('✓ Khôi phục dữ liệu từ bản sao lưu thành công!');
+        } catch (err) {
+          showToast('Lỗi khi đọc file sao lưu: ' + err, 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // ================= TIỆN ÍCH THÔNG BÁO (TOAST) =================
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `px-4 py-2.5 rounded-xl shadow-lg text-xs font-bold text-white transition-all transform duration-300 pointer-events-auto flex items-center gap-2 ${
+        type === 'error' ? 'bg-red-600' : 'bg-slate-900 border border-slate-700'
+      }`;
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-amber-400"></i> <span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function toggleSection(id) {
+      const el = document.getElementById(id);
+      const icon = document.getElementById('metaConfigIcon');
+      if (el) {
+        el.classList.toggle('hidden');
+        if (icon) {
+          icon.classList.toggle('fa-chevron-down');
+          icon.classList.toggle('fa-chevron-up');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
